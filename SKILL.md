@@ -96,7 +96,7 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 1. **Your Audience** — Primary user, secondary users, alternatives, frustrations
 1. **Business Intent** — Revenue model, 90-day goal, 6-month vision, constraints, GTM
 1. **The Feeling** — Brand personality, visual mood, tone of voice, anti-patterns
-1. **Tech Stack** — App type, frontend, backend, database, auth, payments
+1. **Tech Stack** — Frontend, backend, database, auth, payments (platform is already captured in Section 3)
 1. **Tooling** — Which coding agent they’ll build with
 
 ### Intake Behavior Rules

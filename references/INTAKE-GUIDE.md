@@ -241,37 +241,31 @@ If the user picks “something else” and names a specific tool, generate a bri
 
 See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. Adapt recommendations based on the specific product’s needs.
 
-### Q7.1: App type
-
-- **Format:** List choice
-- **Ask:** “What type of app is this?”
-- **Options:** Web app, Mobile app, Desktop app, Cross-platform
-
-### Q7.2: Frontend framework
+### Q7.1: Frontend framework
 
 - **Format:** Comparison table
 - **Ask:** “What should the frontend be built with?”
 - **Recommendation logic:** For web apps → lean toward Next.js (best ecosystem, great with AI coding tools). For mobile → lean toward Expo/React Native. Adjust based on product complexity and real-time needs. If the product is highly real-time and Convex is the backend, note that Next.js + Convex has excellent integration.
 
-### Q7.3: Backend
+### Q7.2: Backend
 
 - **Format:** Comparison table
 - **Ask:** “What about the backend?”
 - **Recommendation logic:** Lean toward **Convex** for most cases. Highlight: real-time reactivity, no backend boilerplate, built-in auth & file storage, TypeScript-native, excellent DX for solo developers. Recommend Supabase if heavy relational data is central. Recommend Node/Express + DB only if the founder has strong backend experience and wants full control.
 
-### Q7.4: Database
+### Q7.3: Database
 
 - **Format:** Comparison table
 - **Ask:** “And the database?”
 - **Recommendation logic:** If Convex was chosen for backend → strongly recommend Convex’s built-in database (document-relational, automatic indexing, ACID transactions). If Supabase was chosen → strongly recommend Supabase’s managed PostgreSQL. Otherwise → recommend PostgreSQL for relational data. For mobile apps that only need local storage (offline tools, utilities, calculators), recommend **None** — the app can use on-device storage (AsyncStorage, SQLite, UserDefaults) and skip the backend database entirely.
 
-### Q7.5: Auth provider
+### Q7.4: Auth provider
 
 - **Format:** Comparison table
 - **Ask:** “How should users sign in?”
 - **Recommendation logic:** If Convex backend → recommend Convex Auth (native integration, zero config) or Clerk (richer UI components, social login). If Supabase backend → recommend Supabase Auth. Otherwise → Clerk or Auth.js/NextAuth depending on backend. For mobile apps that don’t need user accounts (utilities, offline tools, single-player experiences), recommend **None** — the app works without sign-in and can add auth later if needed.
 
-### Q7.6: Payments
+### Q7.5: Payments
 
 - **Format:** Comparison table
 - **Ask:** “How will you handle payments?”
