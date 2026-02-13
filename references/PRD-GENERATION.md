@@ -398,6 +398,8 @@ Specific to the chosen auth provider ({techStack.auth.choice}). Include:
 - Social login setup if applicable
 - Session/token management
 
+Skip this section entirely if the auth choice is “None.” Instead, add a brief note: “This app does not require authentication. If auth is added later, revisit this section.”
+
 -----
 
 ### 11. Payment Integration
@@ -415,13 +417,15 @@ Specific to the chosen auth provider ({techStack.auth.choice}). Include:
 Specific to the chosen payment provider ({techStack.payments.choice}). Include:
 
 - Setup and configuration
-- How to create checkout sessions
+- How to create checkout sessions (web) or configure products/entitlements (mobile IAP)
 - Webhook endpoints and event handling
 - How to gate features based on subscription status
 - Testing with test/sandbox mode
 - Price IDs and product configuration
 
-Skip this section entirely if the revenue model is “Free.”
+For mobile in-app payments (RevenueCat, Superwall): include App Store Connect / Google Play Console product setup, entitlement configuration, and how to check subscription status in the app.
+
+Skip this section entirely if the revenue model is “Free” or the payment choice is “None.”
 
 -----
 
