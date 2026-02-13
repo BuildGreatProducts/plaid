@@ -1,0 +1,13 @@
+{
+  "name": "plaid",
+  "version": "1.0.0",
+  "description": "Product Led AI Development — a Claude skill that guides founders from idea to buildable spec",
+  "license": "MIT",
+  "author": "Build Great Products, Telescope Ltd",
+  "scripts": {
+    "validate": "node scripts/validate-vision.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
