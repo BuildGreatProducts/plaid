@@ -239,7 +239,7 @@ Or tell me what you'd prefer — I can provide guidance for any tool.
 
 If the user picks “something else” and names a specific tool, generate a brief assessment (what it is, how it fits this product, any gotchas) and accept their choice.
 
-See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. Adapt recommendations based on the specific product’s needs.
+See [TECH-STACK-OPTIONS.md](TECH-STACK-OPTIONS.md) for the default comparison data for common stacks. Adapt recommendations based on the specific product’s needs.
 
 ### Q7.1: Frontend framework
 
@@ -291,7 +291,7 @@ See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. A
 
 ## After Intake Is Complete
 
-1. Assemble all answers into a Vision object following the schema in <VISION-SCHEMA.md>
+1. Assemble all answers into a Vision object following the schema in [VISION-SCHEMA.md](VISION-SCHEMA.md)
 1. Save as `vision.json` in the project root
 1. Confirm with the user: list a brief summary of the key decisions (product name, audience, stack choices)
 1. Offer to begin document generation
