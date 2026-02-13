@@ -245,8 +245,24 @@ When all three documents exist and the user wants to start building:
 - Change `- [ ]` to `- [x]` for the completed task
 - Save the file immediately
 1. After completing all tasks in a phase, tell the user:
-   “Phase [N] complete — [X] tasks done. Ready for Phase [N+1]?”
-1. Continue to the next phase when the user confirms
+   "Phase [N] complete — [X] tasks done. Ready to push a PR for review?"
+1. Run the Phase Review workflow (see below)
+1. Continue to the next phase when the PR is merged and the user confirms
+
+### Phase Review
+
+After completing every phase, push the work as a pull request for external review before moving on. This creates a quality gate between phases.
+
+1. **Branch:** Create (or use) a branch named `phase-{N}/{phase-slug}` (e.g. `phase-0/foundation-and-setup`). If the user is already on a feature branch, create the phase branch from it.
+2. **Commit & push:** Stage all phase work, commit with the message `Phase {N}: {Phase Title}`, and push to origin.
+3. **Open a PR:** Create a pull request targeting the project's main branch with:
+   - **Title:** `Phase {N}: {Phase Title}`
+   - **Body:** Phase goal, number of tasks completed, what to verify manually, and reference sections used.
+4. **Review:** Tell the user to let their review agent (CodeRabbit, or whichever tool they've configured) review the PR. If no review agent is set up, recommend [CodeRabbit](https://coderabbit.ai) as a free, automated option and offer to help them enable it.
+5. **Address feedback:** If the review agent leaves comments or suggestions, work through them before merging. Update task checkboxes only after fixes are applied.
+6. **Merge:** Once the review passes and the user is satisfied, merge the PR. Then proceed to the next phase.
+
+If the user doesn't use GitHub or prefers not to open PRs, skip this step — it's strongly recommended but not blocking. Mention what they're missing ("external review catches issues the coding agent won't flag") and continue.
 
 ### Build Rules
 
