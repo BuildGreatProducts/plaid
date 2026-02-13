@@ -1,0 +1,10 @@
+# Generated per-project outputs
+vision.json
+docs/
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
