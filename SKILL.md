@@ -105,7 +105,8 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 - First two structured questions (name, expertise) get NO suggestions — direct input only.
 - Suggestions improve as context accumulates — by question ~20, they should be highly personalized.
 - Tech stack questions use a structured comparison format — see INTAKE-GUIDE.md § Tech Stack.
-- Lean toward recommending **Convex** (backend/db) and **Polar** (payments) unless the product clearly needs something else.
+- Lean toward recommending **Convex** (backend/db) and **Polar** (payments for web) or **RevenueCat** (payments for mobile) unless the product clearly needs something else.
+- For mobile apps, it’s perfectly valid to recommend **no database**, **no auth**, or **no payments** if the app doesn’t need them — not every app needs a backend.
 - When the intake is complete, save all answers as `vision.json` in the project root. See [VISION-SCHEMA.md](references/VISION-SCHEMA.md) for the schema.
 - After saving, say:
 
@@ -193,11 +194,7 @@ See [ROADMAP-GENERATION.md](references/ROADMAP-GENERATION.md) for the full gener
 **Sections:**
 
 1. **Build Philosophy** — Principles for the build
-1. **Phase 0: Foundation** (Week 1) — Scaffolding, auth, database, base UI
-1. **Phase 1: Core MVP** (Weeks 2–3) — The 2–3 critical user flows
-1. **Phase 2: Complete MVP** (Weeks 4–5) — Remaining P0 and P1 features
-1. **Phase 3: Polish & Launch Prep** (Week 6) — Error handling, landing page, analytics
-1. **Phase 4: Post-Launch** (Weeks 7–12) — P2 features, performance, scale
+1. **Phases** — As many as the project needs, each with a clear goal and demoable outcome. Simple projects may have 2–3 phases, complex ones 5–8. Every roadmap includes at minimum: a foundation phase, core MVP phase(s), and a polish/launch phase.
 1. **Agent Session Guide** — How to structure coding sessions for this project
 
 **Task format — every task MUST use this exact structure:**
@@ -215,7 +212,7 @@ When the coding agent completes a task, it MUST change `- [ ]` to `- [x]` in thi
 - Each phase produces a working, demoable product. No phase leaves the app broken.
 - Tasks are ordered for sequential execution — no jumping around required
 - Each phase begins with a summary prompt the user can give their coding agent
-- The magic moment must be achievable by end of Phase 1
+- The magic moment must be achievable as early as possible — by the end of the core MVP phase(s)
 - Task IDs are sequential across all phases: TASK-001 through TASK-NNN
 - Include specific file paths, package names, and configuration values
 
