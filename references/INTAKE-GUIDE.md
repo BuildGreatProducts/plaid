@@ -245,7 +245,7 @@ See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. A
 
 - **Format:** Comparison table
 - **Ask:** “What should the frontend be built with?”
-- **Recommendation logic:** For web apps → lean toward Next.js (best ecosystem, great with AI coding tools). For mobile → lean toward Expo/React Native. Adjust based on product complexity and real-time needs. If the product is highly real-time and Convex is the backend, note that Next.js + Convex has excellent integration.
+- **Recommendation logic:** For web apps → lean toward Next.js (best ecosystem, great with AI coding tools). For mobile → lean toward Expo/React Native. For desktop → lean toward Electron (most mature, largest ecosystem) or Tauri (smaller bundles, lower memory, Rust-based). For cross-platform spanning web + desktop → recommend Next.js for the web layer plus Electron or Tauri for the desktop shell. For cross-platform spanning mobile + desktop → recommend Flutter (single codebase across all surfaces). Adjust based on product complexity and real-time needs. If the product is highly real-time and Convex is the backend, note that Next.js + Convex has excellent integration.
 
 ### Q7.2: Backend
 
@@ -257,13 +257,13 @@ See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. A
 
 - **Format:** Comparison table
 - **Ask:** “And the database?”
-- **Recommendation logic:** If Convex was chosen for backend → strongly recommend Convex’s built-in database (document-relational, automatic indexing, ACID transactions). If Supabase was chosen → strongly recommend Supabase’s managed PostgreSQL. Otherwise → recommend PostgreSQL for relational data. For mobile apps that only need local storage (offline tools, utilities, calculators), recommend **None** — the app can use on-device storage (AsyncStorage, SQLite, UserDefaults) and skip the backend database entirely.
+- **Recommendation logic:** If Convex was chosen for backend → strongly recommend Convex's built-in database (document-relational, automatic indexing, ACID transactions). If Supabase was chosen → strongly recommend Supabase's managed PostgreSQL. Otherwise → recommend PostgreSQL for relational data. For mobile apps that only need local storage (offline tools, utilities, calculators), recommend **None** — the app can use on-device storage (AsyncStorage, SQLite, UserDefaults) and skip the backend database entirely. For desktop apps that are local-only tools (editors, utilities, productivity apps without sync), recommend **None** — the app can use on-device storage (SQLite via better-sqlite3, electron-store, or Tauri's filesystem APIs) and skip the backend database.
 
 ### Q7.4: Auth provider
 
 - **Format:** Comparison table
 - **Ask:** “How should users sign in?”
-- **Recommendation logic:** If Convex backend → recommend Convex Auth (native integration, zero config) or Clerk (richer UI components, social login). If Supabase backend → recommend Supabase Auth. Otherwise → Clerk or Auth.js/NextAuth depending on backend. For mobile apps that don’t need user accounts (utilities, offline tools, single-player experiences), recommend **None** — the app works without sign-in and can add auth later if needed.
+- **Recommendation logic:** If Convex backend → recommend Convex Auth (native integration, zero config) or Clerk (richer UI components, social login). If Supabase backend → recommend Supabase Auth. Otherwise → Clerk or Auth.js/NextAuth depending on backend. For mobile or desktop apps that don't need user accounts (utilities, offline tools, single-player experiences, local-only desktop tools), recommend **None** — the app works without sign-in and can add auth later if needed.
 
 ### Q7.5: Payments
 
@@ -272,8 +272,9 @@ See <TECH-STACK-OPTIONS.md> for the default comparison data for common stacks. A
 - **Skip if:** Revenue model is “Free (figure it out later)” — tell the user “We’ll skip payments for now since you’re figuring out the revenue model. You can always add this later.”
 - **Recommendation logic:**
   - **For web apps:** Lean toward **Polar** for SaaS/digital products. Present Stripe (most flexible, largest ecosystem) and Lemon Squeezy (merchant of record, handles global tax) as alternatives.
-  - **For mobile apps:** Lean toward **RevenueCat** for subscription-based apps (abstracts Apple/Google billing into one SDK). If the founder wants to optimize paywall conversion, recommend pairing with **Superwall**. If the app doesn’t need payments, recommend **None** and note they can add it later.
-  - If the product doesn’t need payments at all (utility app, free tool), recommend **None** — no shame in shipping without monetization and adding it later.
+  - **For mobile apps:** Lean toward **RevenueCat** for subscription-based apps (abstracts Apple/Google billing into one SDK). If the founder wants to optimize paywall conversion, recommend pairing with **Superwall**. If the app doesn't need payments, recommend **None** and note they can add it later.
+  - **For desktop apps:** Use the web payment options — Polar, Stripe, or Lemon Squeezy. Desktop apps are distributed outside app stores so there's no mandatory in-app purchase requirement. If the app doesn't need payments, recommend **None**.
+  - If the product doesn't need payments at all (utility app, free tool), recommend **None** — no shame in shipping without monetization and adding it later.
 
 -----
 
