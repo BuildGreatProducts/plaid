@@ -94,6 +94,7 @@ interface Vision {
 - **No empty strings** in required fields. If the founder skipped a question, use the AI-suggested default.
 - **Arrays** (keyCapabilities, secondaryUsers) must have at least 1 item.
 - **techStack.payments** can have empty strings for choice and rationale if revenue model is “free”.
+- **techStack.database**, **techStack.auth**, and **techStack.payments** may have `"None"` as the choice value for mobile apps that don’t need these layers. Include a rationale explaining why (e.g. “App uses on-device storage only”).
 - **tooling.codingAgentName** is only present when codingAgent is “other”.
 - **meta.createdAt** and **meta.updatedAt** should be set to the current ISO 8601 timestamp when the file is first created.
 
