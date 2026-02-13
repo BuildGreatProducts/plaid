@@ -108,13 +108,16 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 - Lean toward recommending **Convex** (backend/db) and **Polar** (payments for web) or **RevenueCat** (payments for mobile) unless the product clearly needs something else.
 - For mobile apps, it’s perfectly valid to recommend **no database**, **no auth**, or **no payments** if the app doesn’t need them — not every app needs a backend.
 - When the intake is complete, save all answers as `vision.json` in the project root. See [VISION-SCHEMA.md](references/VISION-SCHEMA.md) for the schema.
-- After saving, say:
+- After saving, validate the file by running `node scripts/validate-vision.js`. If validation fails, fix the errors in `vision.json` and re-run the validator until it passes. Surface any warnings to the user but don't block on them.
+- After validation passes, say:
 
-> “Your vision is captured. Ready to generate your product documents? This will create product-vision.md, prd.md, and product-roadmap.md in the docs/ directory.”
+> "Your vision is captured and validated. Ready to generate your product documents? This will create product-vision.md, prd.md, and product-roadmap.md in the docs/ directory."
 
 -----
 
 ## Document Generation
+
+Before generating any documents, validate `vision.json` by running `node scripts/validate-vision.js`. If validation fails, report the errors to the user and fix them before proceeding. Do not begin document generation with an invalid vision file.
 
 Read `vision.json` and generate three documents in order. Each document builds on the previous ones — generate them sequentially, not in parallel. Write each file completely before starting the next.
 
