@@ -96,7 +96,7 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 1. **Your Audience** — Primary user, secondary users, alternatives, frustrations
 1. **Business Intent** — Revenue model, 90-day goal, 6-month vision, constraints, GTM
 1. **The Feeling** — Brand personality, visual mood, tone of voice, anti-patterns
-1. **Tech Stack** — App type, frontend, backend, database, auth, payments
+1. **Tech Stack** — Frontend, backend, database, auth, payments (platform is already captured in Section 3)
 1. **Tooling** — Which coding agent they’ll build with
 
 ### Intake Behavior Rules
@@ -108,13 +108,16 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 - Lean toward recommending **Convex** (backend/db) and **Polar** (payments for web) or **RevenueCat** (payments for mobile) unless the product clearly needs something else.
 - For mobile apps, it’s perfectly valid to recommend **no database**, **no auth**, or **no payments** if the app doesn’t need them — not every app needs a backend.
 - When the intake is complete, save all answers as `vision.json` in the project root. See [VISION-SCHEMA.md](references/VISION-SCHEMA.md) for the schema.
-- After saving, say:
+- After saving, validate the file by running `node scripts/validate-vision.js`. If validation fails, fix the errors in `vision.json` and re-run the validator until it passes. Surface any warnings to the user but don't block on them.
+- After validation passes, say:
 
-> “Your vision is captured. Ready to generate your product documents? This will create product-vision.md, prd.md, and product-roadmap.md in the docs/ directory.”
+> "Your vision is captured and validated. Ready to generate your product documents? This will create product-vision.md, prd.md, and product-roadmap.md in the docs/ directory."
 
 -----
 
 ## Document Generation
+
+Before generating any documents, validate `vision.json` by running `node scripts/validate-vision.js --migrate`. The `--migrate` flag automatically upgrades older schema versions to the current version before validating. If validation fails after migration, report the errors to the user and fix them before proceeding. Do not begin document generation with an invalid vision file.
 
 Read `vision.json` and generate three documents in order. Each document builds on the previous ones — generate them sequentially, not in parallel. Write each file completely before starting the next.
 
@@ -170,14 +173,14 @@ See [PRD-GENERATION.md](references/PRD-GENERATION.md) for the full generation pr
 1. **Auth Implementation** — Specific to the chosen auth provider
 1. **Payment Integration** — Specific to the chosen payment provider
 1. **Edge Cases & Error Handling** — Failure modes and expected behavior per feature
-1. **Dependencies & Integrations** — Third-party services, APIs, packages with versions
+1. **Dependencies & Integrations** — Third-party services, APIs, packages
 1. **Out of Scope** — What this PRD does NOT cover
 1. **Open Questions** — Unresolved decisions for the founder
 
 **Key rules:**
 
 - The user already chose their stack — NEVER second-guess it or suggest alternatives. Provide implementation guidance for their specific choices.
-- Recommend specific package versions
+- Name specific packages but do not pin version numbers — the coding agent will install the latest compatible versions at build time
 - Write so a coding agent can read any section and start implementing immediately
 - Be specific but not rigid — leave room for implementation judgment on minor UX choices
 
@@ -242,17 +245,32 @@ When all three documents exist and the user wants to start building:
 - Change `- [ ]` to `- [x]` for the completed task
 - Save the file immediately
 1. After completing all tasks in a phase, tell the user:
-   “Phase [N] complete — [X] tasks done. Ready for Phase [N+1]?”
-1. Continue to the next phase when the user confirms
+   "Phase [N] complete — [X] tasks done. Ready to push a PR for review?"
+1. Run the Phase Review workflow (see below)
+1. Continue to the next phase when the PR is merged and the user confirms
+
+### Phase Review
+
+After completing every phase, push the work as a pull request for external review before moving on. This creates a quality gate between phases.
+
+1. **Branch:** Create (or use) a branch named `phase-{N}/{phase-slug}` (e.g. `phase-0/foundation-and-setup`). If the user is already on a feature branch, create the phase branch from it.
+2. **Commit & push:** Stage all phase work, commit with the message `Phase {N}: {Phase Title}`, and push to origin.
+3. **Open a PR:** Create a pull request targeting the project's main branch with:
+   - **Title:** `Phase {N}: {Phase Title}`
+   - **Body:** Phase goal, number of tasks completed, what to verify manually, and reference sections used.
+4. **Review:** Tell the user to let their review agent (CodeRabbit, or whichever tool they've configured) review the PR. If no review agent is set up, recommend [CodeRabbit](https://coderabbit.ai) as a free, automated option and offer to help them enable it.
+5. **Address feedback:** If the review agent leaves comments or suggestions, work through them before merging. Update task checkboxes only after fixes are applied.
+6. **Merge:** Once the review passes and the user is satisfied, merge the PR. Then proceed to the next phase.
+
+If the user doesn't use GitHub or prefers not to open PRs, skip this step — it's strongly recommended but not blocking. Mention what they're missing ("external review catches issues the coding agent won't flag") and continue.
 
 ### Build Rules
 
 - Always read the roadmap before starting work to know current progress
+- **Read selectively:** Each phase lists Reference sections — the specific parts of `docs/prd.md` and `docs/product-vision.md` needed for that phase. Read only those sections, not the entire documents. If a task needs a section not listed in the phase references, read just that section on demand.
 - Always update checkboxes after completing tasks — the roadmap is the source of truth
-- If a task is unclear, reference `docs/prd.md` for the detailed spec
-- If a design decision is needed, reference `docs/product-vision.md` for brand/design direction
 - Never skip a task without explaining why and getting user confirmation
-- If you hit an issue, don’t silently move on — flag it and suggest a resolution
+- If you hit an issue, don't silently move on — flag it and suggest a resolution
 
 -----
 

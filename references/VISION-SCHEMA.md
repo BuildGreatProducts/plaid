@@ -89,6 +89,34 @@ interface Vision {
 }
 ```
 
+## Schema Versioning
+
+The `meta.version` field tracks the schema version — the shape of `vision.json` (what fields exist, their types, valid enum values). The `meta.plaidVersion` field tracks which version of the PLAID skill created the file.
+
+When the schema changes (fields added, removed, renamed, or types changed), `CURRENT_VERSION` in `scripts/validate-vision.js` is bumped and a migration function is added to the `migrations` registry.
+
+### How migrations work
+
+- Each migration transforms a vision object from version N to version N+1.
+- Migrations chain: a file at 1.0 migrates through 1.0→1.1→1.2 to reach the current version.
+- Running `node scripts/validate-vision.js` without flags detects outdated files and reports what migrations are pending.
+- Running `node scripts/validate-vision.js --migrate` applies all pending migrations in sequence, writes the updated file, and then validates it.
+- Migrations update `meta.version` to the new version and set `meta.updatedAt` to the current timestamp.
+
+### Adding a new migration
+
+1. Bump `CURRENT_VERSION` in `scripts/validate-vision.js` (e.g. `'1.0'` → `'1.1'`).
+2. Add an entry to the `migrations` object keyed by the version you're migrating FROM:
+   ```javascript
+   '1.0': (vision) => {
+     // transform vision from 1.0 → 1.1
+     vision.meta.version = '1.1';
+     return vision;
+   }
+   ```
+3. Update the `validate()` function to check any new or changed fields.
+4. Update this schema document and the example below to reflect the new shape.
+
 ## Field Rules
 
 - **No empty strings** in required fields. If the founder skipped a question, use the AI-suggested default.

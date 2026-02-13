@@ -49,7 +49,7 @@ Default comparison data for PLAID tech stack questions. Use these as a baseline 
 - ✗ Some native APIs require ejecting from managed workflow
 - **Best for:** Most mobile apps. Default recommendation for mobile.
 
-**Flutter** — Google’s cross-platform UI toolkit using Dart.
+**Flutter** — Google's cross-platform UI toolkit using Dart.
 
 - ✓ Excellent performance — compiles to native
 - ✓ Beautiful, customizable UI components
@@ -58,6 +58,40 @@ Default comparison data for PLAID tech stack questions. Use these as a baseline 
 - ✗ Less ecosystem integration with JS/TS backends
 - ✗ Less AI coding tool support than React Native
 - **Best for:** Apps needing pixel-perfect custom UI or very high performance.
+
+### Desktop Apps
+
+**Electron** — Build cross-platform desktop apps with Chromium and Node.js. Powers VS Code, Slack, Discord, Figma, and Notion.
+
+- ✓ Most mature desktop framework — battle-tested at massive scale
+- ✓ Full web technology stack (HTML, CSS, JS/TS) — no new language to learn
+- ✓ Largest ecosystem of plugins, tools, and community resources
+- ✓ Excellent AI coding tool support (most training data)
+- ✗ Heavy memory footprint — each app bundles its own Chromium instance
+- ✗ Large bundle sizes (100MB+ minimum)
+- ✗ Can feel non-native on macOS — requires extra work to match platform conventions
+- **Best for:** Most desktop apps. Default recommendation for desktop. Especially strong when the team already knows web technologies.
+
+**Tauri** — Lightweight desktop framework using the OS's native webview and a Rust backend.
+
+- ✓ Dramatically smaller bundles than Electron (often 5-10MB vs 100MB+)
+- ✓ Lower memory usage — uses the OS webview instead of bundling Chromium
+- ✓ Rust backend for performance-critical operations and system access
+- ✓ Strong security model — fine-grained permission system for system APIs
+- ✗ Younger ecosystem — fewer community resources and plugins than Electron
+- ✗ Rust knowledge needed for backend plugins and system integrations
+- ✗ OS webview inconsistencies can cause cross-platform rendering differences
+- **Best for:** Desktop apps where bundle size and memory matter, or when deep system integration is needed. Good for developers comfortable with Rust.
+
+**Flutter (Desktop)** — The same Flutter framework listed under Mobile, with support for macOS, Windows, and Linux.
+
+- ✓ Single codebase across mobile, web, and desktop — true cross-platform
+- ✓ Compiles to native — good performance without a webview
+- ✓ Consistent UI across all platforms
+- ✗ Desktop support is less mature than mobile — some platform APIs are missing
+- ✗ Dart ecosystem is smaller than JS/TS for desktop-specific needs
+- ✗ Apps don't follow native platform UI conventions by default
+- **Best for:** Projects that need a single codebase across mobile AND desktop. Not recommended for desktop-only apps — Electron or Tauri are better choices there.
 
 -----
 

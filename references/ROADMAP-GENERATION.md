@@ -84,9 +84,10 @@ The status line should be set to `0/Y tasks complete` and `Phase 0` when first g
 3. **Magic moment first.** The core value proposition works as early as possible. Everything else builds on top.
 4. **Test as you go.** Don't save testing for the end. Each task includes verification.
 5. **Progressive enhancement.** Start with the simplest working version, then layer on polish.
+6. **Review before proceeding.** Push each completed phase as a PR and let a review agent (e.g. CodeRabbit) review it before starting the next phase. External review catches issues the coding agent won't flag.
 ```
 
-Adapt these principles to the specific product but keep all 5. Add 1–2 product-specific principles if relevant.
+Adapt these principles to the specific product but keep all 6. Add 1–2 product-specific principles if relevant.
 
 -----
 
@@ -111,8 +112,12 @@ Every phase MUST follow this structure:
 
 > **Goal:** One sentence describing what's true when this phase is complete.
 
+**Reference sections — read these before starting this phase:**
+- PRD: § Technical Architecture, § Data Model, § Auth Implementation
+- Vision: § Design Direction > Design Tokens
+
 **Phase prompt — give this to your coding agent:**
-> "Read docs/product-roadmap.md and docs/prd.md. We're starting Phase {N}: {Title}. Continue from the first unchecked task. After each task, mark it complete in the roadmap."
+> "Read docs/product-roadmap.md and find Phase {N}. Then read only the Reference sections listed above from docs/prd.md and docs/product-vision.md. Continue from the first unchecked task. After each task, mark it complete in the roadmap. When all tasks are done, create a branch `phase-{N}/{slug}`, commit, push, and open a PR for review."
 
 - [ ] **TASK-XXX** — ...
   Files: ...
@@ -121,10 +126,25 @@ Every phase MUST follow this structure:
 
 Every phase needs:
 
-- A **descriptive title** that communicates the theme (not just “Phase 2”)
+- A **descriptive title** that communicates the theme (not just "Phase 2")
 - A **goal statement** — one sentence describing the demoable outcome
+- A **reference sections list** — the specific PRD and vision doc sections relevant to this phase (see below)
 - A **phase prompt** the user can give their coding agent to kick off the phase
 - **8–20 tasks** ordered for sequential execution
+
+#### Reference sections
+
+Each phase MUST include a "Reference sections" block listing the specific sections of `docs/prd.md` and `docs/product-vision.md` the coding agent should read for that phase. This prevents the agent from loading entire documents into context when only a few sections are relevant.
+
+Rules for reference sections:
+
+- List only the sections the agent actually needs for the tasks in that phase
+- Use the exact heading text from the PRD and vision doc so the agent can navigate directly (e.g. `§ Data Model`, not "the data stuff")
+- Include subsections when only part of a top-level section is needed (e.g. `§ Design Direction > Color Palette` rather than all of `§ Design Direction`)
+- The foundation phase typically references: `§ Technical Architecture`, `§ Design System`, `§ Auth Implementation`, and `§ Design Direction > Design Tokens`
+- Core MVP phases typically reference: `§ Data Model`, `§ API Specification`, `§ User Stories`, `§ Functional Requirements`, `§ UI/UX Requirements` for the relevant screens, and `§ Design Direction` for styling
+- Polish/launch phases typically reference: `§ Non-Functional Requirements`, `§ Edge Cases & Error Handling`, `§ Go-to-Market`, and `§ Design Direction > Accessibility Commitments`
+- If a task needs a section not listed in the phase references, include it in the task's Notes line (e.g. "Notes: See also docs/prd.md § Payment Integration for webhook setup.")
 
 #### Required phase types
 
@@ -189,6 +209,58 @@ Name phases by what they accomplish, not by number alone. Good names tell the fo
 
 -----
 
+### Phase Review Workflow
+
+After completing every phase, the coding agent pushes the work as a pull request for external review. This is a quality gate — the next phase should not start until the PR is reviewed and merged.
+
+#### Branch naming
+
+Create a branch per phase: `phase-{N}/{phase-slug}` — the slug is the phase title in lowercase kebab-case.
+
+Examples:
+- `phase-0/foundation-and-setup`
+- `phase-1/core-search-experience`
+- `phase-3/payments-and-subscription-gating`
+
+#### PR format
+
+```
+Title: Phase {N}: {Phase Title}
+
+Body:
+## Goal
+{The phase's goal statement from the roadmap}
+
+## Completed
+- {X} tasks completed (TASK-{first} through TASK-{last})
+
+## What to verify
+- {Key things to test manually after merging — derived from task verification notes}
+
+## Reference sections used
+- PRD: § {sections}
+- Vision: § {sections}
+```
+
+#### Review agent
+
+The PR should be reviewed by an automated review agent before merging. Recommend [CodeRabbit](https://coderabbit.ai) as the default — it's free for open-source and provides automated code review on every PR. Other options (GitHub Copilot code review, Codacy, etc.) work too. The key is that each phase gets external eyes before the next phase builds on top of it.
+
+If the review agent flags issues:
+1. Address the feedback in follow-up commits on the same branch
+2. Let the review agent re-review
+3. Merge only when the review is clean
+
+#### When the user doesn't use GitHub
+
+If the user isn't using GitHub or doesn't want PR-based review, skip this step. Mention what they're giving up ("automated review catches bugs, security issues, and style problems the coding agent may miss") and continue to the next phase. The per-task verification still applies regardless.
+
+#### Generated roadmap integration
+
+When generating `docs/product-roadmap.md`, include a brief note about the Phase Review workflow in the Build Philosophy section and in the Agent Session Guide. The phase prompt templates should remind the user to open a PR after completing the phase. This way the generated roadmap itself documents the workflow, not just the PLAID instructions.
+
+-----
+
 ### 3. Agent Session Guide
 
 ```markdown
@@ -197,28 +269,33 @@ Name phases by what they accomplish, not by number alone. Good names tell the fo
 ### How to Use This Roadmap with Your Coding Agent
 
 1. **Start a session:** Give your coding agent the phase prompt at the beginning of each phase.
-2. **Let it work:** The agent reads the roadmap, finds the first unchecked task, implements it, and marks it complete.
-3. **One session = one phase (ideally):** Try to complete a full phase in one session for best continuity. If you need to stop, the agent can resume from the last unchecked task.
-4. **Reference the PRD:** If the agent needs more detail on any feature, it should read `docs/prd.md`.
-5. **Reference the vision:** If the agent needs design or brand guidance, it should read `docs/product-vision.md`.
+2. **Read selectively:** Each phase lists its Reference sections — the specific parts of the PRD and vision doc needed for that phase. The agent should read only those sections, not the entire documents.
+3. **Let it work:** The agent reads the roadmap, finds the first unchecked task, implements it, and marks it complete.
+4. **One session = one phase (ideally):** Try to complete a full phase in one session for best continuity. If you need to stop, the agent can resume from the last unchecked task.
+5. **Push a PR for review:** When a phase is complete, push the work as a PR and let a review agent (e.g. [CodeRabbit](https://coderabbit.ai)) review it before starting the next phase. See the Phase Review section below.
+6. **Need more context?** If a task references a section not in the phase's Reference sections, the agent should read just that section on demand.
 
 ### Session Tips
 
-- **Context matters:** At the start of each session, have the agent read the roadmap to understand progress and the PRD for implementation details.
+- **Don't read everything:** The PRD and vision doc are large. Each phase's Reference sections tell the agent exactly what to read. Loading the full documents wastes context.
 - **Don't skip tasks:** Tasks are ordered intentionally. Skipping creates dependency issues.
 - **Verify after each phase:** Run the app after completing a phase to confirm everything works before moving on.
+- **Review before moving on:** Push a PR for each completed phase and let your review agent check it. Don't start the next phase until the PR is merged. This catches issues early when they're cheap to fix.
 - **Update the status line:** After completing tasks, update the header status: `**Status:** X/Y tasks complete` and `**Current Phase:** Phase N`.
 
 ### Prompt Templates
 
 **Starting a new phase:**
-> "Read docs/product-roadmap.md and docs/prd.md. Start working on the next unchecked task. After completing each task, update the checkbox to [x] in the roadmap file. Continue through the phase."
+> "Read docs/product-roadmap.md and find the current phase. Read only the Reference sections listed for that phase from docs/prd.md and docs/product-vision.md. Start working on the first unchecked task. After completing each task, update the checkbox to [x] in the roadmap file. Continue through the phase."
 
 **Resuming after a break:**
-> "Read docs/product-roadmap.md. Find where we left off (first unchecked task) and continue. Read docs/prd.md for specs on the current feature."
+> "Read docs/product-roadmap.md. Find where we left off (first unchecked task). Read only the Reference sections listed for the current phase from docs/prd.md and docs/product-vision.md. Continue from the first unchecked task."
+
+**After completing a phase:**
+> "Phase [N] is complete. Create a branch called phase-{N}/{slug}, commit all work, push, and open a PR targeting main. Title it 'Phase {N}: {Title}' and include the phase goal and completed task count in the body."
 
 **Fixing an issue:**
-> "There's a problem with [description]. Read docs/prd.md for the expected behavior and fix it. Don't mark any new tasks complete until the fix is verified."
+> "There's a problem with [description]. Read the relevant section of docs/prd.md for the expected behavior and fix it. Don't mark any new tasks complete until the fix is verified."
 ```
 
 -----
@@ -255,6 +332,11 @@ When writing individual tasks, follow these principles:
 
 ## Phase 0: {Foundation Title}
 > Goal: ...
+
+Reference sections:
+- PRD: § ...
+- Vision: § ...
+
 > Phase prompt: ...
 
 - [ ] **TASK-001** — ...
@@ -263,6 +345,11 @@ When writing individual tasks, follow these principles:
 
 ## Phase 1: {Core MVP Title}
 > Goal: ...
+
+Reference sections:
+- PRD: § ...
+- Vision: § ...
+
 > Phase prompt: ...
 
 - [ ] **TASK-0XX** — ...
