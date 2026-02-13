@@ -251,11 +251,10 @@ When all three documents exist and the user wants to start building:
 ### Build Rules
 
 - Always read the roadmap before starting work to know current progress
+- **Read selectively:** Each phase lists Reference sections — the specific parts of `docs/prd.md` and `docs/product-vision.md` needed for that phase. Read only those sections, not the entire documents. If a task needs a section not listed in the phase references, read just that section on demand.
 - Always update checkboxes after completing tasks — the roadmap is the source of truth
-- If a task is unclear, reference `docs/prd.md` for the detailed spec
-- If a design decision is needed, reference `docs/product-vision.md` for brand/design direction
 - Never skip a task without explaining why and getting user confirmation
-- If you hit an issue, don’t silently move on — flag it and suggest a resolution
+- If you hit an issue, don't silently move on — flag it and suggest a resolution
 
 -----
 
