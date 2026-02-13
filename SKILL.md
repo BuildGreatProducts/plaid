@@ -173,14 +173,14 @@ See [PRD-GENERATION.md](references/PRD-GENERATION.md) for the full generation pr
 1. **Auth Implementation** — Specific to the chosen auth provider
 1. **Payment Integration** — Specific to the chosen payment provider
 1. **Edge Cases & Error Handling** — Failure modes and expected behavior per feature
-1. **Dependencies & Integrations** — Third-party services, APIs, packages with versions
+1. **Dependencies & Integrations** — Third-party services, APIs, packages
 1. **Out of Scope** — What this PRD does NOT cover
 1. **Open Questions** — Unresolved decisions for the founder
 
 **Key rules:**
 
 - The user already chose their stack — NEVER second-guess it or suggest alternatives. Provide implementation guidance for their specific choices.
-- Recommend specific package versions
+- Name specific packages but do not pin version numbers — the coding agent will install the latest compatible versions at build time
 - Write so a coding agent can read any section and start implementing immediately
 - Be specific but not rigid — leave room for implementation judgment on minor UX choices
 
