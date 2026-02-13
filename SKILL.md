@@ -117,7 +117,7 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 
 ## Document Generation
 
-Before generating any documents, validate `vision.json` by running `node scripts/validate-vision.js`. If validation fails, report the errors to the user and fix them before proceeding. Do not begin document generation with an invalid vision file.
+Before generating any documents, validate `vision.json` by running `node scripts/validate-vision.js --migrate`. The `--migrate` flag automatically upgrades older schema versions to the current version before validating. If validation fails after migration, report the errors to the user and fix them before proceeding. Do not begin document generation with an invalid vision file.
 
 Read `vision.json` and generate three documents in order. Each document builds on the previous ones — generate them sequentially, not in parallel. Write each file completely before starting the next.
 
