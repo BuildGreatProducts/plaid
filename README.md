@@ -48,7 +48,17 @@ This ensures you always have a working, demoable product at the end of each phas
 
 ## Adding PLAID as a Skill
 
-PLAID is a Claude Code skill. To install it:
+PLAID is a Claude Code skill. The quickest way to install it:
+
+```sh
+npx skills add BuildGreatProducts/plaid
+```
+
+This uses the [skills CLI](https://github.com/vercel-labs/skills) to install the skill into your project automatically.
+
+### Manual Installation
+
+If you prefer to install manually:
 
 1. Open your Claude Code settings (either project-level `.claude/settings.json` or user-level `~/.claude/settings.json`)
 2. Add the path to `SKILL.md` under the `skills` array:
@@ -61,13 +71,16 @@ PLAID is a Claude Code skill. To install it:
 }
 ```
 
-3. Start a new Claude Code conversation and trigger PLAID with any of these prompts:
-   - "PLAID"
-   - "Help me build something"
-   - "Plan a product"
-   - "Define my vision"
-   - "Generate a PRD"
-   - "Spec out my idea"
+### Using PLAID
+
+Start a new Claude Code conversation and trigger PLAID with any of these prompts:
+
+- "PLAID"
+- "Help me build something"
+- "Plan a product"
+- "Define my vision"
+- "Generate a PRD"
+- "Spec out my idea"
 
 No dependencies need to be installed. The skill is entirely documentation-driven — `SKILL.md` contains the complete instructions Claude follows.
 
