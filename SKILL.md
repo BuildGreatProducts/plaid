@@ -1,19 +1,19 @@
------
-
-## name: plaid
+---
+name: plaid
 description: |
-Product Led AI Development. Guides founders through defining their product
-vision via a structured conversation, then generates three documents:
-product-vision.md (strategy, brand, audience, GTM), prd.md (technical spec,
-design system, requirements), and product-roadmap.md (phased build plan with
-checkboxes). Use when someone says “plan a product”, “help me build something”,
-“define my vision”, “generate a PRD”, “plan my app”, “spec out my idea”,
-“what should I build”, “product strategy”, or “PLAID”.
+  Product Led AI Development. Guides founders through defining their product
+  vision via a structured conversation, then generates three documents:
+  product-vision.md (strategy, brand, audience, GTM), prd.md (technical spec,
+  design system, requirements), and product-roadmap.md (phased build plan with
+  checkboxes). Use when someone says "plan a product", "help me build something",
+  "define my vision", "generate a PRD", "plan my app", "spec out my idea",
+  "what should I build", "product strategy", or "PLAID".
 license: MIT
 metadata:
-author: plaid-dev
-version: “1.0”
-compatibility: Requires file system access to write docs/ directory.
+  author: plaid-dev
+  version: "1.0"
+  compatibility: Requires file system access to write docs/ directory.
+---
 
 # PLAID — Product Led AI Development
 
