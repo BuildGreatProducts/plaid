@@ -1,6 +1,6 @@
 # PLAID — Product Led AI Development
 
-A Claude skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, go-to-market specialist, and technical architect into a single conversational workflow.
+An agent skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, go-to-market specialist, and technical architect into a single conversational workflow.
 
 ## How It Works
 
@@ -48,7 +48,7 @@ This ensures you always have a working, demoable product at the end of each phas
 
 ## Adding PLAID as a Skill
 
-PLAID is a Claude Code skill. The quickest way to install it:
+PLAID is an AI agent skill. The quickest way to install it:
 
 ```sh
 npx skills add BuildGreatProducts/plaid
@@ -73,7 +73,7 @@ If you prefer to install manually:
 
 ### Using PLAID
 
-Start a new Claude Code conversation and trigger PLAID with any of these prompts:
+Start a new conversation with your AI coding agent and trigger PLAID with any of these prompts:
 
 - "PLAID"
 - "Help me build something"
@@ -82,7 +82,7 @@ Start a new Claude Code conversation and trigger PLAID with any of these prompts
 - "Generate a PRD"
 - "Spec out my idea"
 
-No dependencies need to be installed. The skill is entirely documentation-driven — `SKILL.md` contains the complete instructions Claude follows.
+No dependencies need to be installed. The skill is entirely documentation-driven — `SKILL.md` contains the complete instructions your agent follows.
 
 ## What to Expect After Setup
 
@@ -108,7 +108,7 @@ You can update your answers after the intake is complete:
 
 ```
 plaid/
-├── SKILL.md                    # Complete skill implementation (Claude reads this)
+├── SKILL.md                    # Complete skill implementation (your agent reads this)
 ├── README.md                   # This file
 ├── package.json                # npm metadata and validate script
 ├── LICENSE.txt                 # MIT license
