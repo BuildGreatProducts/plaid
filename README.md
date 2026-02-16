@@ -1,3 +1,11 @@
+```
+██████╗  ██╗      █████╗  ██╗ ██████╗ 
+██╔══██╗ ██║     ██╔══██╗ ██║ ██╔══██╗
+██████╔╝ ██║     ███████║ ██║ ██║  ██║
+██╔═══╝  ██║     ██╔══██║ ██║ ██║  ██║
+██║      ███████╗██║  ██║ ██║ ██████╔╝
+╚═╝      ╚══════╝╚═╝  ╚═╝ ╚═╝ ╚═════╝ 
+```
 # PLAID — Product Led AI Development
 
 An agent skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, go-to-market specialist, and technical architect into a single conversational workflow.
