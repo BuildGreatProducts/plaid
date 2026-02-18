@@ -2,12 +2,13 @@
 name: plaid
 description: |
   Product Led AI Development. Guides founders through defining their product
-  vision via a structured conversation, then generates three documents:
-  product-vision.md (strategy, brand, audience, GTM), prd.md (technical spec,
-  design system, requirements), and product-roadmap.md (phased build plan with
-  checkboxes). Use when someone says "plan a product", "help me build something",
-  "define my vision", "generate a PRD", "plan my app", "spec out my idea",
-  "what should I build", "product strategy", or "PLAID".
+  vision via a structured conversation, then generates four documents:
+  product-vision.md (strategy, brand, audience), prd.md (technical spec,
+  design system, requirements), product-roadmap.md (phased build plan with
+  checkboxes), and gtm.md (go-to-market plan). Use when someone says "plan a
+  product", "help me build something", "define my vision", "generate a PRD",
+  "plan my app", "spec out my idea", "what should I build", "product strategy",
+  or "PLAID".
 license: MIT
 metadata:
   author: plaid-dev
@@ -31,7 +32,7 @@ Run the vision intake conversation. See “Vision Intake” below.
 **Vision exists but docs are incomplete** (`vision.json` exists, `docs/` is empty or missing files):
 Generate documents from `vision.json`. See “Document Generation” below.
 
-**Everything exists** (`vision.json` + all 3 docs in `docs/`):
+**Everything exists** (`vision.json` + all 4 docs in `docs/`):
 Enter build mode. Read `product-roadmap.md` and start executing the first incomplete phase. See “Build Mode” below.
 
 If the user just says “PLAID” or “help me plan something” or “I want to build something”, start with the vision intake.
@@ -111,7 +112,7 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 - After saving, validate the file by running `node scripts/validate-vision.js`. If validation fails, fix the errors in `vision.json` and re-run the validator until it passes. Surface any warnings to the user but don't block on them.
 - After validation passes, say:
 
-> "Your vision is captured and validated. Ready to generate your product documents? This will create product-vision.md, prd.md, and product-roadmap.md in the docs/ directory."
+> "Your vision is captured and validated. Ready to generate your product documents? This will create product-vision.md, prd.md, product-roadmap.md, and gtm.md in the docs/ directory."
 
 -----
 
@@ -119,7 +120,7 @@ See [INTAKE-GUIDE.md](references/INTAKE-GUIDE.md) for the complete question bank
 
 Before generating any documents, validate `vision.json` by running `node scripts/validate-vision.js --migrate`. The `--migrate` flag automatically upgrades older schema versions to the current version before validating. If validation fails after migration, report the errors to the user and fix them before proceeding. Do not begin document generation with an invalid vision file.
 
-Read `vision.json` and generate three documents in order. Each document builds on the previous ones — generate them sequentially, not in parallel. Write each file completely before starting the next.
+Read `vision.json` and generate four documents in order. Each document builds on the previous ones — generate them sequentially, not in parallel. Write each file completely before starting the next.
 
 ### Document 1: product-vision.md
 
@@ -136,7 +137,6 @@ See [VISION-GENERATION.md](references/VISION-GENERATION.md) for the full generat
 1. **Product Strategy** — Product principles, market differentiation, magic moment design, MVP definition (in scope + explicitly out of scope), feature priority (MoSCoW), core user flows, success metrics, risks
 1. **Brand Strategy** — Positioning statement, brand personality, voice & tone guide with DO/DON’T examples, messaging framework, elevator pitches (5s/30s/2min), competitive differentiation narrative, brand anti-patterns
 1. **Design Direction** — Design philosophy, visual mood, color palette (hex values), typography (specific typeface recommendations), spacing & layout system, component philosophy, iconography, accessibility commitments, motion & interaction principles, design tokens
-1. **Go-to-Market** — Market context, launch strategy (pre/soft/public phases), pre-launch playbook, launch week plan, post-launch growth (weeks 1–12), channel strategy, content strategy, community strategy, key metrics, budget, risks
 
 **Key rules:**
 
@@ -145,8 +145,7 @@ See [VISION-GENERATION.md](references/VISION-GENERATION.md) for the full generat
 - MVP must be buildable in 4–8 weeks. Be opinionated about what to cut
 - Magic moment must be achievable in the MVP — if not, MVP scope is wrong
 - Brand voice guidelines need concrete examples, not just adjectives
-- GTM tactics must be executable by a solo founder — not “use social media” but “post 3x/week on Twitter with threads about [specific topic]”
-- Design specs must be precise — not “clean” but “minimum 24px between sections”
+- Design specs must be precise — not "clean" but "minimum 24px between sections"
 - Design tokens should include CSS variable names and Tailwind config values
 
 ### Document 2: prd.md
@@ -219,23 +218,54 @@ When the coding agent completes a task, it MUST change `- [ ]` to `- [x]` in thi
 - Task IDs are sequential across all phases: TASK-001 through TASK-NNN
 - Include specific file paths, package names, and configuration values
 
+### Document 4: gtm.md
+
+Write to `docs/gtm.md`.
+
+Read `docs/product-vision.md` first — this document references its contents (audience, strategy, brand).
+
+This document is the go-to-market playbook. It covers everything a solo founder needs to launch and grow: launch strategy, pre-launch playbook, channel strategy, content strategy, metrics, and budget.
+
+See [GTM-GENERATION.md](references/GTM-GENERATION.md) for the full generation prompt with detailed section requirements.
+
+**Sections:**
+
+1. **Market Context** — Landscape analysis, opportunity size, why now
+1. **Launch Strategy** — Pre-launch, soft launch, and public launch phases
+1. **Pre-Launch Playbook** — Week-by-week plan from week -8 to launch
+1. **Launch Week Plan** — Day-by-day plan for launch week
+1. **Post-Launch Growth** — Weeks 1–12 growth tactics and iteration priorities
+1. **Channel Strategy** — Channels ranked by expected ROI
+1. **Content Strategy** — What to create, where to publish, how often
+1. **Community Strategy** — Where the audience gathers, how to show up
+1. **Key Metrics** — Acquisition, activation, retention, and revenue targets
+1. **Budget Considerations** — Realistic budget for a solo founder
+1. **Risks** — GTM-specific risks and mitigations
+
+**Key rules:**
+
+- GTM tactics must be executable by a solo founder — not "use social media" but "post 3x/week on Twitter with threads about [specific topic]"
+- Don't repeat strategic context from the vision doc — reference it and build on it
+- Every recommendation should include specific actions, not just categories
+
 ### After Generation
 
-When all three documents are written, tell the user:
+When all four documents are written, tell the user:
 
-> “Done. I’ve created three documents in docs/:
-> 
-> - **product-vision.md** — Your strategy, brand, audience, and go-to-market plan
+> "Done. I've created four documents in docs/:
+>
+> - **product-vision.md** — Your strategy, brand, audience, and design direction
 > - **prd.md** — Technical spec your coding agent can build from
 > - **product-roadmap.md** — Phased build plan with checkboxes to track progress
-> 
-> Want to start building? I’ll begin with Phase 0.”
+> - **gtm.md** — Your go-to-market plan and launch playbook
+>
+> Want to start building? I'll begin with Phase 0."
 
 -----
 
 ## Build Mode
 
-When all three documents exist and the user wants to start building:
+When all four documents exist and the user wants to start building:
 
 1. Read `docs/product-roadmap.md`
 1. Find the first phase with incomplete tasks (unchecked `- [ ]` items)
@@ -267,7 +297,7 @@ If the user doesn't use GitHub or prefers not to open PRs, skip this step — it
 ### Build Rules
 
 - Always read the roadmap before starting work to know current progress
-- **Read selectively:** Each phase lists Reference sections — the specific parts of `docs/prd.md` and `docs/product-vision.md` needed for that phase. Read only those sections, not the entire documents. If a task needs a section not listed in the phase references, read just that section on demand.
+- **Read selectively:** Each phase lists Reference sections — the specific parts of `docs/prd.md`, `docs/product-vision.md`, and `docs/gtm.md` needed for that phase. Read only those sections, not the entire documents. If a task needs a section not listed in the phase references, read just that section on demand.
 - Always update checkboxes after completing tasks — the roadmap is the source of truth
 - Never skip a task without explaining why and getting user confirmation
 - If you hit an issue, don't silently move on — flag it and suggest a resolution
@@ -279,7 +309,7 @@ If the user doesn't use GitHub or prefers not to open PRs, skip this step — it
 PLAID is designed to be interrupted and resumed:
 
 - **Partial intake:** If `vision.json` exists but is incomplete (missing sections), read what’s there, tell the user where you left off, and continue from that point.
-- **Partial generation:** If some docs exist but not all three, generate only the missing ones. Read existing docs as context.
+- **Partial generation:** If some docs exist but not all four, generate only the missing ones. Read existing docs as context.
 - **Mid-build:** If the roadmap has some checked tasks, pick up from the first unchecked task. Summarize what’s been completed so far.
 
 ## Refreshing Documents

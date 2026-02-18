@@ -11,6 +11,7 @@ You are a technical project manager and AI-assisted development expert. You know
 1. Read `vision.json` from the project root
 1. Read `docs/product-vision.md` — strategy, brand, design tokens
 1. Read `docs/prd.md` — technical spec, data models, requirements
+1. Read `docs/gtm.md` — go-to-market plan, launch strategy, metrics
 
 The PRD is your primary input. Every task in the roadmap should trace back to a requirement in the PRD.
 
@@ -117,7 +118,7 @@ Every phase MUST follow this structure:
 - Vision: § Design Direction > Design Tokens
 
 **Phase prompt — give this to your coding agent:**
-> "Read docs/product-roadmap.md and find Phase {N}. Then read only the Reference sections listed above from docs/prd.md and docs/product-vision.md. Continue from the first unchecked task. After each task, mark it complete in the roadmap. When all tasks are done, create a branch `phase-{N}/{slug}`, commit, push, and open a PR for review."
+> "Read docs/product-roadmap.md and find Phase {N}. Then read only the Reference sections listed above from docs/prd.md, docs/product-vision.md, and docs/gtm.md. Continue from the first unchecked task. After each task, mark it complete in the roadmap. When all tasks are done, create a branch `phase-{N}/{slug}`, commit, push, and open a PR for review."
 
 - [ ] **TASK-XXX** — ...
   Files: ...
@@ -134,7 +135,7 @@ Every phase needs:
 
 #### Reference sections
 
-Each phase MUST include a "Reference sections" block listing the specific sections of `docs/prd.md` and `docs/product-vision.md` the coding agent should read for that phase. This prevents the agent from loading entire documents into context when only a few sections are relevant.
+Each phase MUST include a "Reference sections" block listing the specific sections of `docs/prd.md`, `docs/product-vision.md`, and `docs/gtm.md` the coding agent should read for that phase. This prevents the agent from loading entire documents into context when only a few sections are relevant.
 
 Rules for reference sections:
 
@@ -143,7 +144,7 @@ Rules for reference sections:
 - Include subsections when only part of a top-level section is needed (e.g. `§ Design Direction > Color Palette` rather than all of `§ Design Direction`)
 - The foundation phase typically references: `§ Technical Architecture`, `§ Design System`, `§ Auth Implementation`, and `§ Design Direction > Design Tokens`
 - Core MVP phases typically reference: `§ Data Model`, `§ API Specification`, `§ User Stories`, `§ Functional Requirements`, `§ UI/UX Requirements` for the relevant screens, and `§ Design Direction` for styling
-- Polish/launch phases typically reference: `§ Non-Functional Requirements`, `§ Edge Cases & Error Handling`, `§ Go-to-Market`, and `§ Design Direction > Accessibility Commitments`
+- Polish/launch phases typically reference: `§ Non-Functional Requirements`, `§ Edge Cases & Error Handling`, `docs/gtm.md`, and `§ Design Direction > Accessibility Commitments`
 - If a task needs a section not listed in the phase references, include it in the task's Notes line (e.g. "Notes: See also docs/prd.md § Payment Integration for webhook setup.")
 
 #### Required phase types
@@ -240,6 +241,7 @@ Body:
 ## Reference sections used
 - PRD: § {sections}
 - Vision: § {sections}
+- GTM: § {sections} (if applicable)
 ```
 
 #### Review agent
@@ -269,7 +271,7 @@ When generating `docs/product-roadmap.md`, include a brief note about the Phase 
 ### How to Use This Roadmap with Your Coding Agent
 
 1. **Start a session:** Give your coding agent the phase prompt at the beginning of each phase.
-2. **Read selectively:** Each phase lists its Reference sections — the specific parts of the PRD and vision doc needed for that phase. The agent should read only those sections, not the entire documents.
+2. **Read selectively:** Each phase lists its Reference sections — the specific parts of the PRD, vision doc, and GTM doc needed for that phase. The agent should read only those sections, not the entire documents.
 3. **Let it work:** The agent reads the roadmap, finds the first unchecked task, implements it, and marks it complete.
 4. **One session = one phase (ideally):** Try to complete a full phase in one session for best continuity. If you need to stop, the agent can resume from the last unchecked task.
 5. **Push a PR for review:** When a phase is complete, push the work as a PR and let a review agent (e.g. [CodeRabbit](https://coderabbit.ai)) review it before starting the next phase. See the Phase Review section below.
@@ -277,7 +279,7 @@ When generating `docs/product-roadmap.md`, include a brief note about the Phase 
 
 ### Session Tips
 
-- **Don't read everything:** The PRD and vision doc are large. Each phase's Reference sections tell the agent exactly what to read. Loading the full documents wastes context.
+- **Don't read everything:** The PRD, vision doc, and GTM doc can be large. Each phase's Reference sections tell the agent exactly what to read. Loading the full documents wastes context.
 - **Don't skip tasks:** Tasks are ordered intentionally. Skipping creates dependency issues.
 - **Verify after each phase:** Run the app after completing a phase to confirm everything works before moving on.
 - **Review before moving on:** Push a PR for each completed phase and let your review agent check it. Don't start the next phase until the PR is merged. This catches issues early when they're cheap to fix.
@@ -286,10 +288,10 @@ When generating `docs/product-roadmap.md`, include a brief note about the Phase 
 ### Prompt Templates
 
 **Starting a new phase:**
-> "Read docs/product-roadmap.md and find the current phase. Read only the Reference sections listed for that phase from docs/prd.md and docs/product-vision.md. Start working on the first unchecked task. After completing each task, update the checkbox to [x] in the roadmap file. Continue through the phase."
+> "Read docs/product-roadmap.md and find the current phase. Read only the Reference sections listed for that phase from docs/prd.md, docs/product-vision.md, and docs/gtm.md. Start working on the first unchecked task. After completing each task, update the checkbox to [x] in the roadmap file. Continue through the phase."
 
 **Resuming after a break:**
-> "Read docs/product-roadmap.md. Find where we left off (first unchecked task). Read only the Reference sections listed for the current phase from docs/prd.md and docs/product-vision.md. Continue from the first unchecked task."
+> "Read docs/product-roadmap.md. Find where we left off (first unchecked task). Read only the Reference sections listed for the current phase from docs/prd.md, docs/product-vision.md, and docs/gtm.md. Continue from the first unchecked task."
 
 **After completing a phase:**
 > "Phase [N] is complete. Create a branch called phase-{N}/{slug}, commit all work, push, and open a PR targeting main. Title it 'Phase {N}: {Title}' and include the phase goal and completed task count in the body."

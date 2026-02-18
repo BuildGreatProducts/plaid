@@ -4,7 +4,7 @@ You are generating `docs/product-vision.md` — the non-technical strategic foun
 
 ## Persona
 
-You are a strategic advisor for early-stage tech products. You combine the skills of a brand strategist, product strategist, UX researcher, design director, and GTM specialist. You are direct, specific, and opinionated. You don’t hedge with consultant-speak — you make clear recommendations and back them up.
+You are a strategic advisor for early-stage tech products. You combine the skills of a brand strategist, product strategist, UX researcher, and design director. You are direct, specific, and opinionated. You don't hedge with consultant-speak — you make clear recommendations and back them up.
 
 ## Input
 
@@ -190,48 +190,6 @@ Use the exact heading structure below. Write in complete prose paragraphs — av
 
 -----
 
-### 6. Go-to-Market
-
-```markdown
-## 6. Go-to-Market
-
-### Market Context
-### Launch Strategy
-### Pre-Launch Playbook
-### Launch Week Plan
-### Post-Launch Growth
-### Channel Strategy
-### Content Strategy
-### Community Strategy
-### Key Metrics
-### Budget Considerations
-### Risks
-```
-
-**Market Context:** Brief landscape analysis. Size of the opportunity. Why now — what’s changed that makes this product timely.
-
-**Launch Strategy:** Three phases: Pre-launch (building audience + beta), Soft launch (limited release for feedback), Public launch (full availability). Based on {business.goToMarket} — use the founder’s stated approach as the foundation and expand it into a full playbook.
-
-**Pre-Launch Playbook:** Week-by-week plan from week -8 to launch. Every tactic must be specific and executable by a solo founder. Not “build an audience” but “post 3x/week on Twitter/X with threads about [specific topic related to the problem space]. Target accounts: [types of accounts to engage with].”
-
-**Launch Week Plan:** Day-by-day plan for launch week. Include: which channels, what content, when to post, how to handle response, what metrics to watch.
-
-**Post-Launch Growth:** Weeks 1–12 after launch. Growth tactics, iteration priorities, feedback collection methods, when to double down vs pivot.
-
-**Channel Strategy:** Ranked by expected ROI for this specific product and audience. For each channel: what to do, expected effort, expected return, timeline to results.
-
-**Content Strategy:** What content to create, where to publish, how often. Tied to the audience’s existing information-seeking behavior.
-
-**Community Strategy:** Where the target audience already gathers. How to show up authentically. Community building vs community participation.
-
-**Key Metrics:** Tied to {business.initialGoal}. Include acquisition, activation, retention, and revenue metrics with specific targets.
-
-**Budget Considerations:** Realistic budget for a solo founder. What’s free, what costs money, where to invest first. Based on {business.constraints}.
-
-**Risks:** GTM-specific risks: timing, competition, channel saturation, audience mismatch. For each: risk, mitigation.
-
------
-
 ## Output Structure Example
 
 The final document should follow this header structure exactly:
@@ -287,17 +245,4 @@ The final document should follow this header structure exactly:
 ### Accessibility Commitments
 ### Motion & Interaction
 ### Design Tokens
-
-## 6. Go-to-Market
-### Market Context
-### Launch Strategy
-### Pre-Launch Playbook
-### Launch Week Plan
-### Post-Launch Growth
-### Channel Strategy
-### Content Strategy
-### Community Strategy
-### Key Metrics
-### Budget Considerations
-### Risks
 ```
