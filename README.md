@@ -8,7 +8,7 @@
 ```
 # PLAID — Product Led AI Development
 
-An agent skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, go-to-market specialist, and technical architect into a single conversational workflow.
+An agent skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single conversational workflow.
 
 ## How It Works
 
@@ -33,15 +33,16 @@ All answers are saved to a `vision.json` file in the project root. This file fol
 
 ### Phase 2: Document Generation
 
-Reads `vision.json` and produces three documents in `docs/`:
+Reads `vision.json` and produces four documents in `docs/`:
 
 | Document | Purpose | Audience |
 |---|---|---|
-| `product-vision.md` | Strategic foundation — vision, mission, brand, user research, product strategy, design direction, GTM plan | Founders, designers, stakeholders |
+| `product-vision.md` | Strategic foundation — vision, mission, brand, user research, product strategy, design direction | Founders, designers, stakeholders |
 | `prd.md` | Technical specification — architecture, data models, API specs, user stories, requirements, design system, auth/payments setup | Coding agents, developers |
 | `product-roadmap.md` | Phased build plan with checkbox-tracked tasks for sequential execution | Coding agents, project managers |
+| `gtm.md` | Go-to-market plan — launch strategy, pre-launch playbook, channel strategy, growth tactics, metrics | Founders, marketing |
 
-Documents are generated in order because each one builds on the previous. The vision doc informs the PRD, and the PRD informs the roadmap.
+Documents are generated in order because each one builds on the previous. The vision doc informs the PRD, the PRD informs the roadmap, and the GTM doc builds on the vision doc's strategy and audience.
 
 ### Phase 3: Build Mode
 
@@ -96,7 +97,7 @@ No dependencies need to be installed. The skill is entirely documentation-driven
 
 **First session — you'll go through the Vision Intake.** PLAID opens with "What do you want to build?" and adapts based on how concrete your idea is. If you have a clear concept, it jumps into structured questions. If you're still exploring, it helps you narrow down before moving forward. Expect the intake to cover all 8 sections listed above. At the end, you'll have a validated `vision.json` in your project root.
 
-**Second session — Document Generation.** When PLAID detects a `vision.json` but missing docs, it generates all three documents. You'll see `docs/product-vision.md`, `docs/prd.md`, and `docs/product-roadmap.md` appear in your project.
+**Second session — Document Generation.** When PLAID detects a `vision.json` but missing docs, it generates all four documents. You'll see `docs/product-vision.md`, `docs/prd.md`, `docs/product-roadmap.md`, and `docs/gtm.md` appear in your project.
 
 **Subsequent sessions — Build Mode.** Once all documents exist, PLAID enters build mode automatically. It reads the roadmap, finds the next incomplete phase, and starts working through tasks. After each phase, it'll ask if you're ready to push a PR.
 
@@ -130,6 +131,7 @@ plaid/
     ├── VISION-GENERATION.md    # How product-vision.md is generated
     ├── PRD-GENERATION.md       # How prd.md is generated
     ├── ROADMAP-GENERATION.md   # How product-roadmap.md is generated
+    ├── GTM-GENERATION.md       # How gtm.md is generated
     └── TECH-STACK-OPTIONS.md   # Comparison data for stack recommendations
 ```
 
