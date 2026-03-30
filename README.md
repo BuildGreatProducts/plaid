@@ -1,22 +1,32 @@
 ```
-██████╗  ██╗      █████╗  ██╗ ██████╗ 
+██████╗  ██╗      █████╗  ██╗ ██████╗
 ██╔══██╗ ██║     ██╔══██╗ ██║ ██╔══██╗
 ██████╔╝ ██║     ███████║ ██║ ██║  ██║
 ██╔═══╝  ██║     ██╔══██║ ██║ ██║  ██║
 ██║      ███████╗██║  ██║ ██║ ██████╔╝
-╚═╝      ╚══════╝╚═╝  ╚═╝ ╚═╝ ╚═════╝ 
+╚═╝      ╚══════╝╚═╝  ╚═╝ ╚═╝ ╚═════╝
 ```
 # PLAID — Product Led AI Development
 
-An agent skill that guides founders from idea to buildable spec through a structured conversation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single conversational workflow.
+An agent skill suite that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into three focused skills.
+
+## Skills
+
+PLAID is split into three skills, each handling a distinct phase of the product development pipeline:
+
+| Skill | Trigger | What It Does | Output |
+|---|---|---|---|
+| **plaid-plan** | "PLAID", "plan a product", "define my vision", "generate a PRD" | Vision intake conversation + document generation | `vision.json`, `product-vision.md`, `prd.md`, `product-roadmap.md` |
+| **plaid-launch** | "plaid launch", "go-to-market", "launch plan", "GTM strategy" | Go-to-market plan generation | `gtm.md` |
+| **plaid-build** | "plaid build", "build the app", "start building" | Executes roadmap phase by phase, reviews code, commits to git | Working code, git commits per phase |
 
 ## How It Works
 
-PLAID walks through three sequential phases. Each phase produces concrete artifacts, and the entire pipeline is resumable — you can stop at any point and pick up where you left off.
+### 1. Plan — `/plaid-plan`
 
-### Phase 1: Vision Intake
+Start here. PLAID Plan guides you through a structured vision intake conversation, then generates three product documents.
 
-An interactive conversation that captures your product idea through 8 structured sections:
+**Vision Intake** — An interactive conversation that captures your product idea through 8 sections:
 
 1. **About You** — Name, expertise, and background story
 2. **Your Purpose** — Who you help, the problem you solve, the transformation you deliver, and why you're the right person to build it
@@ -27,81 +37,87 @@ An interactive conversation that captures your product idea through 8 structured
 7. **Tech Stack** — Frontend, backend, database, auth, and payments choices with comparison data and recommendations
 8. **Tooling** — Which coding agent will execute the build
 
-For each question, PLAID generates 3 tailored suggestions based on your previous answers. You can pick one, modify it, or write your own. The conversation is designed to feel like working with a smart advisor, not filling out a form.
+For each question, PLAID generates 3 tailored suggestions based on your previous answers. You can pick one, modify it, or write your own. All answers are saved to `vision.json` in the project root.
 
-All answers are saved to a `vision.json` file in the project root. This file follows a strict schema and serves as the single source of truth for everything that follows.
-
-### Phase 2: Document Generation
-
-Reads `vision.json` and produces four documents in `docs/`:
+**Document Generation** — Reads `vision.json` and produces three documents in `docs/`:
 
 | Document | Purpose | Audience |
 |---|---|---|
 | `product-vision.md` | Strategic foundation — vision, mission, brand, user research, product strategy, design direction | Founders, designers, stakeholders |
 | `prd.md` | Technical specification — architecture, data models, API specs, user stories, requirements, design system, auth/payments setup | Coding agents, developers |
 | `product-roadmap.md` | Phased build plan with checkbox-tracked tasks for sequential execution | Coding agents, project managers |
+
+### 2. Launch — `/plaid-launch`
+
+Generates your go-to-market playbook. Requires `vision.json` and `docs/product-vision.md` from plaid-plan.
+
+| Document | Purpose | Audience |
+|---|---|---|
 | `gtm.md` | Go-to-market plan — launch strategy, pre-launch playbook, channel strategy, growth tactics, metrics | Founders, marketing |
 
-Documents are generated in order because each one builds on the previous. The vision doc informs the PRD, the PRD informs the roadmap, and the GTM doc builds on the vision doc's strategy and audience.
+### 3. Build — `/plaid-build`
 
-### Phase 3: Build Mode
+Executes the roadmap phase by phase. Requires `docs/product-roadmap.md` and `docs/prd.md` from plaid-plan.
 
-Executes the roadmap phase by phase:
+1. Reads the roadmap and finds the first phase with incomplete tasks
+2. Builds each task in order, referencing the PRD for implementation details
+3. Marks tasks complete as it goes (`- [x]`)
+4. Reviews code after each phase for bugs and inconsistencies
+5. Commits to git after each phase
+6. Continues until all phases are complete
 
-1. Reads `product-roadmap.md` and finds the first phase with incomplete tasks
-2. Works through tasks sequentially, marking each complete with a checkbox (`[x]`)
-3. After completing a phase, creates a pull request for external review (quality gate)
-4. Waits for PR approval before starting the next phase
-
-This ensures you always have a working, demoable product at the end of each phase, and every phase gets human review before moving on.
+Each phase produces a working, demoable product.
 
 ## Adding PLAID as a Skill
 
-PLAID is an AI agent skill. The quickest way to install it:
+PLAID is an AI agent skill suite. The quickest way to install it:
 
 ```sh
 npx skills add BuildGreatProducts/plaid
 ```
 
-This uses the [skills CLI](https://github.com/vercel-labs/skills) to install the skill into your project automatically.
+This uses the [skills CLI](https://github.com/vercel-labs/skills) to install all three skills into your project automatically.
 
 ### Manual Installation
 
 If you prefer to install manually:
 
 1. Open your Claude Code settings (either project-level `.claude/settings.json` or user-level `~/.claude/settings.json`)
-2. Add the path to `SKILL.md` under the `skills` array:
+2. Add the paths to each skill under the `skills` array:
 
 ```json
 {
   "skills": [
-    "/absolute/path/to/plaid/SKILL.md"
+    "/absolute/path/to/plaid/skills/plaid-plan/SKILL.md",
+    "/absolute/path/to/plaid/skills/plaid-launch/SKILL.md",
+    "/absolute/path/to/plaid/skills/plaid-build/SKILL.md"
   ]
 }
 ```
 
 ### Using PLAID
 
-Start a new conversation with your AI coding agent and trigger PLAID with any of these prompts:
+Start a new conversation with your AI coding agent and trigger any skill:
 
-- "PLAID"
-- "Help me build something"
-- "Plan a product"
-- "Define my vision"
-- "Generate a PRD"
-- "Spec out my idea"
+**Plan:** "PLAID", "Help me build something", "Plan a product", "Define my vision", "Generate a PRD", "Spec out my idea"
 
-No dependencies need to be installed. The skill is entirely documentation-driven — `SKILL.md` contains the complete instructions your agent follows.
+**Launch:** "plaid launch", "Go-to-market plan", "Launch strategy", "GTM"
+
+**Build:** "plaid build", "Start building", "Execute the roadmap"
+
+No dependencies need to be installed. The skills are entirely documentation-driven.
 
 ## What to Expect After Setup
 
-**First session — you'll go through the Vision Intake.** PLAID opens with "What do you want to build?" and adapts based on how concrete your idea is. If you have a clear concept, it jumps into structured questions. If you're still exploring, it helps you narrow down before moving forward. Expect the intake to cover all 8 sections listed above. At the end, you'll have a validated `vision.json` in your project root.
+**First session — Vision Intake (`/plaid-plan`).** PLAID opens with "What do you want to build?" and adapts based on how concrete your idea is. If you have a clear concept, it jumps into structured questions. If you're still exploring, it helps you narrow down before moving forward. At the end, you'll have a validated `vision.json` in your project root.
 
-**Second session — Document Generation.** When PLAID detects a `vision.json` but missing docs, it generates all four documents. You'll see `docs/product-vision.md`, `docs/prd.md`, `docs/product-roadmap.md`, and `docs/gtm.md` appear in your project.
+**Second session — Document Generation (`/plaid-plan`).** When PLAID detects a `vision.json` but missing docs, it generates the three product documents: `product-vision.md`, `prd.md`, and `product-roadmap.md`.
 
-**Subsequent sessions — Build Mode.** Once all documents exist, PLAID enters build mode automatically. It reads the roadmap, finds the next incomplete phase, and starts working through tasks. After each phase, it'll ask if you're ready to push a PR.
+**Go-to-market (`/plaid-launch`).** Generate your launch playbook whenever you're ready. This can happen before or after building.
 
-**Resuming at any point.** PLAID detects your current state automatically:
+**Building (`/plaid-build`).** Execute the roadmap. PLAID Build reads the roadmap, builds each phase, reviews the code, and commits. You get a working product at the end of each phase.
+
+**Resuming at any point.** Each skill detects your current state automatically:
 - Partial intake? Continues from the next unanswered question
 - Missing docs? Generates only what's missing
 - Mid-build? Shows progress and picks up from the first unchecked task
@@ -117,25 +133,31 @@ You can update your answers after the intake is complete:
 
 ```
 plaid/
-├── SKILL.md                    # Complete skill implementation (your agent reads this)
-├── README.md                   # This file
-├── package.json                # npm metadata and validate script
-├── LICENSE.txt                 # MIT license
+├── skills/                     # Skill definitions
+│   ├── plaid-plan/
+│   │   └── SKILL.md            # Vision intake + 3-doc generation
+│   ├── plaid-launch/
+│   │   └── SKILL.md            # Go-to-market plan generation
+│   └── plaid-build/
+│       └── SKILL.md            # Roadmap execution + git commits
+├── references/                 # Shared detailed guides
+│   ├── INTAKE-GUIDE.md         # Full question bank with suggestion prompts
+│   ├── VISION-SCHEMA.md        # TypeScript schema, field rules, examples
+│   ├── VISION-GENERATION.md    # How product-vision.md is generated
+│   ├── PRD-GENERATION.md       # How prd.md is generated
+│   ├── ROADMAP-GENERATION.md   # How product-roadmap.md is generated
+│   ├── GTM-GENERATION.md       # How gtm.md is generated
+│   └── TECH-STACK-OPTIONS.md   # Comparison data for stack recommendations
 ├── scripts/
 │   └── validate-vision.js      # Schema validator and migrator
 ├── assets/
 │   └── vision-template.json    # Empty template for new vision files
-└── references/                 # Detailed guides SKILL.md delegates to
-    ├── INTAKE-GUIDE.md         # Full question bank with suggestion prompts
-    ├── VISION-SCHEMA.md        # TypeScript schema, field rules, examples
-    ├── VISION-GENERATION.md    # How product-vision.md is generated
-    ├── PRD-GENERATION.md       # How prd.md is generated
-    ├── ROADMAP-GENERATION.md   # How product-roadmap.md is generated
-    ├── GTM-GENERATION.md       # How gtm.md is generated
-    └── TECH-STACK-OPTIONS.md   # Comparison data for stack recommendations
+├── README.md                   # This file
+├── package.json                # npm metadata and validate script
+└── LICENSE.txt                 # MIT license
 ```
 
-The `references/` directory contains the detailed guides that `SKILL.md` delegates to during each phase. You don't need to read these to use PLAID, but they're useful if you want to understand or customize how documents are generated.
+The `references/` directory contains detailed guides shared across all skills. You don't need to read these to use PLAID, but they're useful if you want to understand or customize how documents are generated.
 
 ## Validator
 
