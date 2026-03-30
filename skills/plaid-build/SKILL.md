@@ -12,7 +12,7 @@ license: MIT
 metadata:
   author: plaid-dev
   version: "2.0"
-  compatibility: Requires docs/product-roadmap.md and docs/prd.md to exist.
+  compatibility: Requires docs/product-roadmap.md, docs/prd.md, and docs/product-vision.md to exist.
 ---
 
 # PLAID Build — Execute the Roadmap
@@ -25,12 +25,13 @@ Before starting, verify these files exist:
 
 1. `docs/product-roadmap.md`
 2. `docs/prd.md`
+3. `docs/product-vision.md`
 
-If either is missing, tell the user:
+If any are missing, tell the user:
 
-> "I need a product roadmap and PRD before I can start building. Run `/plaid-plan` first."
+> "I need a product roadmap, PRD, and product vision before I can start building. Run `/plaid-plan` first."
 
-Do not proceed without both files.
+Do not proceed without all three files.
 
 -----
 
