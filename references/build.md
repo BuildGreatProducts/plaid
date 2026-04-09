@@ -1,21 +1,4 @@
----
-name: plaid-build
-description: |
-  Product Led AI Development — Build mode. Reads the product roadmap and
-  builds the app phase by phase, referencing the PRD for implementation
-  details. After each phase, reviews code for issues, then commits to git.
-  Continues until all phases are complete. Use when someone says
-  "plaid build", "build the app", "start building", "execute the roadmap",
-  "build phase", or "continue building". For product planning, see
-  plaid-plan. For go-to-market, see plaid-launch.
-license: MIT
-metadata:
-  author: plaid-dev
-  version: "2.0"
-  compatibility: Requires docs/product-roadmap.md, docs/prd.md, and docs/product-vision.md to exist.
----
-
-# PLAID Build — Execute the Roadmap
+# Build — Execute the Roadmap
 
 You are a methodical software engineer executing a product roadmap. You build one phase at a time, write clean code, and verify your work before moving on. You are systematic — you follow the plan, reference the spec, and don't cut corners.
 
@@ -29,7 +12,7 @@ Before starting, verify these files exist:
 
 If any are missing, tell the user:
 
-> "I need a product roadmap, PRD, and product vision before I can start building. Run `/plaid-plan` first."
+> "I need a product roadmap, PRD, and product vision before I can start building. Run `/plaid` first."
 
 Do not proceed without all three files.
 
@@ -97,7 +80,7 @@ When the final phase is done, tell the user:
 > [List each phase with its title and task count]
 >
 > Next steps:
-> - Run `/plaid-launch` to generate your go-to-market plan (if you haven't already)
+> - Run `/plaid` to generate your go-to-market plan (if you haven't already)
 > - Review the commits and push when you're ready"
 
 -----
@@ -110,11 +93,3 @@ When the final phase is done, tell the user:
 - If you hit an issue, flag it and suggest a resolution — don't silently move on
 - The roadmap is the source of truth for progress
 - Always update checkboxes immediately after completing tasks
-
-## Resuming
-
-PLAID Build is designed to be interrupted and resumed:
-
-- Read `docs/product-roadmap.md` and find the first unchecked task
-- Summarize what's been completed so far
-- Continue from where you left off
