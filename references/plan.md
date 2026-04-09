@@ -1,27 +1,4 @@
----
-name: plaid-plan
-description: |
-  Product Led AI Development — Planning mode. Guides founders through a
-  structured vision intake conversation, then generates three documents:
-  product-vision.md (strategy, brand, audience), prd.md (technical spec,
-  design system, requirements), and product-roadmap.md (phased build plan
-  with checkboxes). Use when someone says "plaid plan", "plan a product",
-  "help me build something", "define my vision", "generate a PRD",
-  "plan my app", "spec out my idea", "what should I build", "product strategy",
-  or "PLAID". For go-to-market planning, see plaid-launch. For building
-  from the roadmap, see plaid-build.
-license: MIT
-metadata:
-  author: plaid-dev
-  version: "2.0"
-  compatibility: Requires file system access to write docs/ directory.
----
-
-# PLAID Plan — Product Led AI Development
-
-You are a product development advisor helping a founder go from idea to buildable spec. You are warm, direct, and opinionated. You treat the founder as capable and smart — you're here to help them articulate what's already in their head, not to lecture them.
-
-The full pipeline is: **Vision → Strategy → Spec.**
+# Plan — Vision Intake + Document Generation
 
 ## Modes
 
@@ -33,7 +10,11 @@ Run the vision intake conversation. See "Vision Intake" below.
 **Vision exists but docs are incomplete** (`vision.json` exists, `docs/` is empty or missing files):
 Generate documents from `vision.json`. See "Document Generation" below.
 
-If the user just says "PLAID" or "help me plan something" or "I want to build something", start with the vision intake.
+**Partial intake:** If `vision.json` exists but is incomplete (missing sections), read what's there, tell the user where you left off, and continue from that point.
+
+**Partial generation:** If some docs exist but not all three, generate only the missing ones. Read existing docs as context.
+
+If the user just says "PLAID" or "help me plan something" or "I want to build something", use the mode-selection logic above to decide what to do — don't assume a fresh intake. Only start the vision intake if `vision.json` does not exist.
 
 -----
 
@@ -85,7 +66,7 @@ Guide the founder through 8 sections IN ORDER. For each AI-assisted question:
 1. Let them pick one, modify one, or write their own
 1. Carry the answer forward as context for subsequent suggestions
 
-See [INTAKE-GUIDE.md](../../references/INTAKE-GUIDE.md) for the complete question bank, suggestion generation prompts, and the tech stack comparison format.
+See [INTAKE-GUIDE.md](./INTAKE-GUIDE.md) for the complete question bank, suggestion generation prompts, and the tech stack comparison format.
 
 **Intake Sections (summary):**
 
@@ -106,7 +87,7 @@ See [INTAKE-GUIDE.md](../../references/INTAKE-GUIDE.md) for the complete questio
 - Tech stack questions use a structured comparison format — see INTAKE-GUIDE.md § Tech Stack.
 - Lean toward recommending **Convex** (backend/db) and **Polar** (payments for web) or **RevenueCat** (payments for mobile) unless the product clearly needs something else.
 - For mobile apps, it's perfectly valid to recommend **no database**, **no auth**, or **no payments** if the app doesn't need them — not every app needs a backend.
-- When the intake is complete, save all answers as `vision.json` in the project root. See [VISION-SCHEMA.md](../../references/VISION-SCHEMA.md) for the schema.
+- When the intake is complete, save all answers as `vision.json` in the project root. See [VISION-SCHEMA.md](./VISION-SCHEMA.md) for the schema.
 - After saving, validate the file by running `node scripts/validate-vision.js`. If validation fails, fix the errors in `vision.json` and re-run the validator until it passes. Surface any warnings to the user but don't block on them.
 - After validation passes, say:
 
@@ -126,7 +107,7 @@ Write to `docs/product-vision.md`.
 
 This document covers everything non-technical: the strategic foundation that informs all product and business decisions.
 
-See [VISION-GENERATION.md](../../references/VISION-GENERATION.md) for the full generation prompt with detailed section requirements.
+See [VISION-GENERATION.md](./VISION-GENERATION.md) for the full generation prompt with detailed section requirements.
 
 **Sections:**
 
@@ -154,7 +135,7 @@ Read `docs/product-vision.md` first — this document references its contents.
 
 This document is the technical blueprint. It will be consumed by a coding agent to build the app. Every section must be specific enough to implement without asking clarifying questions.
 
-See [PRD-GENERATION.md](../../references/PRD-GENERATION.md) for the full generation prompt with detailed section requirements.
+See [PRD-GENERATION.md](./PRD-GENERATION.md) for the full generation prompt with detailed section requirements.
 
 **Sections:**
 
@@ -189,7 +170,7 @@ Read both `docs/product-vision.md` and `docs/prd.md` first.
 
 This is the build plan. It breaks the PRD into phases, each producing a working increment. Every task has a checkbox that the coding agent marks complete as it finishes work.
 
-See [ROADMAP-GENERATION.md](../../references/ROADMAP-GENERATION.md) for the full generation prompt.
+See [ROADMAP-GENERATION.md](./ROADMAP-GENERATION.md) for the full generation prompt.
 
 **Sections:**
 
@@ -227,17 +208,10 @@ When all three documents are written, tell the user:
 > - **product-roadmap.md** — Phased build plan with checkboxes to track progress
 >
 > Next steps:
-> - Run `/plaid-launch` to generate your go-to-market plan
-> - Run `/plaid-build` to start building from the roadmap"
+> - Run `/plaid` to generate your go-to-market plan
+> - Run `/plaid` to start building from the roadmap"
 
 -----
-
-## Resuming
-
-PLAID Plan is designed to be interrupted and resumed:
-
-- **Partial intake:** If `vision.json` exists but is incomplete (missing sections), read what's there, tell the user where you left off, and continue from that point.
-- **Partial generation:** If some docs exist but not all three, generate only the missing ones. Read existing docs as context.
 
 ## Refreshing Documents
 
