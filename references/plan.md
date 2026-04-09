@@ -14,7 +14,7 @@ Generate documents from `vision.json`. See "Document Generation" below.
 
 **Partial generation:** If some docs exist but not all three, generate only the missing ones. Read existing docs as context.
 
-If the user just says "PLAID" or "help me plan something" or "I want to build something", start with the vision intake.
+If the user just says "PLAID" or "help me plan something" or "I want to build something", use the mode-selection logic above to decide what to do — don't assume a fresh intake. Only start the vision intake if `vision.json` does not exist.
 
 -----
 
