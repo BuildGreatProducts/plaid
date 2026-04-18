@@ -10,8 +10,10 @@ Run the full idea discovery conversation from Step 0.
 **product-idea.md exists**:
 Read it and ask what they want to do:
 - Refine the existing idea (jump to Step 5)
-- Pick a different candidate from the scorecard (jump to Step 4)
+- Pick a different candidate from the scorecard (jump to Step 4 — see scorecard check below)
 - Start over (confirm, then restart from Step 0)
+
+Before jumping to Step 4, validate that the Step 3 scorecard is present and well-formed: read `product-idea.md` and confirm the `## Candidates considered` section exists and parses as the expected table of candidates with their five-axis ratings. If the section is missing, empty, or corrupted, do not jump to Step 4. Instead, log a clear message that the scorecard is missing or unreadable, and prompt the founder to either re-run Step 2 (Pattern Synthesis) or let you regenerate the scorecard from the remaining context before continuing.
 
 **Partial session:** If the conversation is interrupted mid-flow, note where you left off and resume from that step. Don't restart.
 
@@ -33,7 +35,7 @@ Handle the response:
 
 - **Business** → Branch A
 - **Expertise** → Branch B
-- **Both** → Run a trimmed version of each (4–5 questions per branch instead of 8)
+- **Both** → Run a trimmed version of each (5 questions per branch instead of 8)
 - **"I don't know"** → Ask two scouting questions: "What do you spend most of your working time on right now?" and "What's something you get unreasonably excited about?" Use the answers to recommend a branch. Then proceed.
 
 -----
@@ -120,6 +122,8 @@ Recommend the strongest candidate. Explain the call in two sentences — what it
 - Pick a different candidate
 - Blend two candidates into one
 
+Blends must combine complementary aspects — e.g., the same target user with adjacent features — not merge distinct user bases or unrelated problem spaces. Acceptable: "bookkeepers doing reconciliation" + "bookkeepers doing client reporting" (same user, different features). Not acceptable: "bookkeepers doing reconciliation" + "dentists managing appointments" (different users, different problems).
+
 If they blend, re-score the blended idea before moving on.
 
 -----
@@ -130,7 +134,8 @@ Tighten the chosen idea across five fields. Ask for each, offer suggestions, and
 
 1. **Target user** — Specific. "Freelance bookkeepers who manage 10–30 small-business clients," not "small businesses."
 2. **Specific problem** — In the user's own words. What do they complain about today?
-3. **Smallest testable version** — The MVP shape. What's the one flow that proves the concept? This is the magic moment.
+3. **Smallest testable version** — The MVP shape. What's the one flow that proves the concept?
+   (Focus: this is the magic moment that proves the concept.)
 4. **Why you** — The advantage statement. One sentence on why this founder wins.
 5. **Top 3 risky assumptions** — What must be true for this to work? What would kill it?
 
@@ -173,7 +178,14 @@ Write the file to the project root as `product-idea.md`. Use this structure:
 Run `/plaid` to start the Plan intake. The product-idea.md above will pre-fill much of your product vision.
 ```
 
-Write the file. Then confirm to the founder that it's been saved.
+Write the file, then verify the write succeeded before confirming. If the write fails, catch the error and surface a clear, user-friendly message based on the cause — for example:
+
+- **Permission denied** → "I couldn't save `product-idea.md` because the project root isn't writable. Check folder permissions and try again."
+- **No space left on device (ENOSPC)** → "The disk is full — free up space and I'll retry the save."
+- **Existing file conflict** (unexpected contents or read-only) → "A `product-idea.md` already exists and can't be overwritten. Want me to save under a different name or overwrite it?"
+- **Any other error** → Report the error message verbatim and ask how to proceed.
+
+Only confirm "saved" to the founder after the write is verified successful. On failure, do not send the confirmation message and do not advance to Step 7 until the file is written.
 
 -----
 
