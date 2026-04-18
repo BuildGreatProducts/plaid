@@ -8,21 +8,36 @@
 ```
 # PLAID — Product Led AI Development
 
-An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single skill with three capabilities.
+An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single skill with four capabilities.
 
 ## Capabilities
 
-PLAID is a single skill with three capabilities, each handling a distinct phase of the product development pipeline:
+PLAID is a single skill with four capabilities, each handling a distinct phase of the product development pipeline:
 
 | Capability | Trigger | What It Does | Output |
 |---|---|---|---|
+| **Idea** | "plaid idea", "help me find an idea", "what should I build" | Guided discovery of a product idea from business processes or personal expertise | `product-idea.md` |
 | **Plan** | "PLAID", "plan a product", "define my vision", "generate a PRD" | Vision intake conversation + document generation | `vision.json`, `product-vision.md`, `prd.md`, `product-roadmap.md` |
 | **Launch** | "plaid launch", "go-to-market", "launch plan", "GTM strategy" | Go-to-market plan generation | `gtm.md` |
 | **Build** | "plaid build", "build the app", "start building" | Executes roadmap phase by phase, reviews code, commits to git | Working code, git commits per phase |
 
 ## How It Works
 
-### 1. Plan
+### 1. Idea
+
+Start here if you don't yet have a concrete product concept. PLAID Idea walks you through a stepped conversation that mines a great idea from what you already know or already do.
+
+1. **Source selection** — Business, personal expertise, or both
+2. **Context capture** — 8 targeted questions (or 10 combined, trimmed) surfacing workflows, unmet demand, unfair advantages, and obsessions
+3. **Pattern synthesis** — 3–5 ranked candidate directions drawn directly from your answers
+4. **Scorecard** — Each candidate scored on unfair advantage, pain level, audience reachability, MVP feasibility, and differentiation
+5. **Pick one** — Opinionated recommendation you can accept, swap, or blend
+6. **Sharpen** — Target user, specific problem, smallest testable version, why you, and top risky assumptions
+7. **Output** — `product-idea.md` in the project root
+
+`product-idea.md` feeds directly into Plan — most of the Plan intake's first three sections are already answered.
+
+### 2. Plan
 
 Start here. PLAID Plan guides you through a structured vision intake conversation, then generates three product documents.
 
@@ -47,7 +62,7 @@ For each question, PLAID generates 3 tailored suggestions based on your previous
 | `prd.md` | Technical specification — architecture, data models, API specs, user stories, requirements, design system, auth/payments setup | Coding agents, developers |
 | `product-roadmap.md` | Phased build plan with checkbox-tracked tasks for sequential execution | Coding agents, project managers |
 
-### 2. Launch
+### 3. Launch
 
 Generates your go-to-market playbook. Requires `vision.json` and `docs/product-vision.md` from the Plan capability.
 
@@ -55,7 +70,7 @@ Generates your go-to-market playbook. Requires `vision.json` and `docs/product-v
 |---|---|---|
 | `gtm.md` | Go-to-market plan — launch strategy, pre-launch playbook, channel strategy, growth tactics, metrics | Founders, marketing |
 
-### 3. Build
+### 4. Build
 
 Executes the roadmap phase by phase. Requires `docs/product-roadmap.md` and `docs/prd.md` from the Plan capability.
 
@@ -97,6 +112,8 @@ If you prefer to install manually:
 
 Start a new conversation with your AI coding agent and trigger PLAID:
 
+**Idea:** "plaid idea", "Help me find an idea", "What should I build", "Product idea from my business"
+
 **Plan:** "PLAID", "Help me build something", "Plan a product", "Define my vision", "Generate a PRD", "Spec out my idea"
 
 **Launch:** "plaid launch", "Go-to-market plan", "Launch strategy", "GTM"
@@ -107,7 +124,9 @@ PLAID automatically routes to the right capability based on your request. No dep
 
 ## What to Expect After Setup
 
-**First session — Vision Intake.** PLAID opens with "What do you want to build?" and adapts based on how concrete your idea is. If you have a clear concept, it jumps into structured questions. If you're still exploring, it helps you narrow down before moving forward. At the end, you'll have a validated `vision.json` in your project root.
+**Optional first session — Idea Discovery.** If you don't yet have a concrete product concept, start with `plaid idea`. PLAID walks you through a stepped conversation that mines an idea from your business or expertise, ranks candidates on a scorecard, and writes `product-idea.md` in the project root. This becomes input to the Plan intake.
+
+**First (or second) session — Vision Intake.** PLAID opens with "What do you want to build?" and adapts based on how concrete your idea is. If you have a clear concept (or a `product-idea.md`), it jumps into structured questions. If you're still exploring, it helps you narrow down before moving forward. At the end, you'll have a validated `vision.json` in your project root.
 
 **Second session — Document Generation.** When PLAID detects a `vision.json` but missing docs, it generates the three product documents: `product-vision.md`, `prd.md`, and `product-roadmap.md`.
 
@@ -133,6 +152,7 @@ You can update your answers after the intake is complete:
 plaid/
 ├── SKILL.md                    # Router — routes to capability files
 ├── references/                 # Capability files + detailed guides
+│   ├── idea.md                 # Idea discovery — produces product-idea.md
 │   ├── plan.md                 # Vision intake + 3-doc generation
 │   ├── launch.md               # Go-to-market plan generation
 │   ├── build.md                # Roadmap execution + git commits

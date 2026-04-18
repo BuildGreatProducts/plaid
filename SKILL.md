@@ -2,14 +2,17 @@
 name: plaid
 description: |
   Product Led AI Development — guides founders from idea to launched product.
-  Three capabilities: Plan (vision intake + document generation), Launch
+  Four capabilities: Idea (discover a product idea from business processes or
+  personal expertise), Plan (vision intake + document generation), Launch
   (go-to-market strategy), and Build (roadmap execution). Use when someone
-  says "PLAID", "plan a product", "define my vision", "generate a PRD",
-  "plan my app", "spec out my idea", "what should I build", "product strategy",
-  "help me build something", "plaid launch", "go-to-market", "launch plan",
-  "GTM strategy", "help me launch", "marketing plan", "launch playbook",
-  "plaid build", "build the app", "start building", "execute the roadmap",
-  "build phase", or "continue building".
+  says "PLAID", "plaid idea", "help me find an idea", "product idea",
+  "idea from my business", "idea from my expertise", "what should I build",
+  "plan a product", "define my vision", "generate a PRD", "plan my app",
+  "spec out my idea", "product strategy", "help me build something",
+  "plaid launch", "go-to-market", "launch plan", "GTM strategy",
+  "help me launch", "marketing plan", "launch playbook", "plaid build",
+  "build the app", "start building", "execute the roadmap", "build phase",
+  or "continue building".
 license: MIT
 metadata:
   author: plaid-dev
@@ -19,7 +22,7 @@ metadata:
 
 ## Overview
 
-PLAID helps founders go from idea to launched product through structured conversations and AI-powered document generation. The full pipeline is: **Plan → Launch → Build.**
+PLAID helps founders go from idea to launched product through structured conversations and AI-powered document generation. The full pipeline is: **Idea → Plan → Launch → Build.**
 
 ## Shared Context
 
@@ -35,7 +38,8 @@ Determine which capability the user needs based on their request, then read the 
 
 | User Intent | Reference File |
 |---|---|
-| "PLAID", "plan a product", "define my vision", "generate a PRD", "plan my app", "spec out my idea", "what should I build", "product strategy", "help me build something" | `references/plan.md` |
+| "plaid idea", "help me find an idea", "product idea", "idea from my business", "idea from my expertise", "what should I build" | `references/idea.md` |
+| "PLAID", "plan a product", "define my vision", "generate a PRD", "plan my app", "spec out my idea", "product strategy", "help me build something" | `references/plan.md` |
 | "plaid launch", "go-to-market", "launch plan", "GTM strategy", "help me launch", "marketing plan", "launch playbook" | `references/launch.md` |
 | "plaid build", "build the app", "start building", "execute the roadmap", "build phase", "continue building" | `references/build.md` |
 
@@ -43,6 +47,8 @@ Determine which capability the user needs based on their request, then read the 
 
 If the request is ambiguous, check the project state to determine the right capability:
 
+- No `product-idea.md` AND no `vision.json` → offer Idea (with Plan as a direct alternative if they already know what they want to build)
+- `product-idea.md` exists but no `vision.json` → route to Plan (using `product-idea.md` as pre-filled context)
 - No `vision.json` → route to Plan
 - `vision.json` exists but `docs/` is incomplete → route to Plan (document generation mode)
 - All docs exist but no code built yet → suggest Launch or Build
@@ -52,8 +58,9 @@ If still ambiguous after checking state, ask one clarifying question before load
 
 ### Phase Transitions
 
-When a capability completes, suggest the natural next step. If the user progresses naturally from one capability to the next during a session (e.g., finishes planning and says "now let's build"), load the next reference file and continue without requiring re-invocation.
+When a capability completes, suggest the natural next step. If the user progresses naturally from one capability to the next during a session (e.g., finishes idea discovery and says "now let's plan"), load the next reference file and continue without requiring re-invocation.
 
+- After Idea completes → suggest planning (`/plaid`) — `product-idea.md` pre-fills much of the vision intake
 - After Plan completes → suggest launching (`/plaid`) or building (`/plaid`)
 - After Launch completes → suggest building (`/plaid`)
 - After Build completes → suggest launching (`/plaid`) if not done already
