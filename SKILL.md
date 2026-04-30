@@ -2,17 +2,20 @@
 name: plaid
 description: |
   Product Led AI Development — guides founders from idea to launched product.
-  Four capabilities: Idea (discover a product idea from business processes or
-  personal expertise), Plan (vision intake + document generation), Launch
+  Five capabilities: Idea (discover a product idea from business processes or
+  personal expertise), Plan (vision intake + document generation), Design
+  (translate image references into a design.md design-system spec), Launch
   (go-to-market strategy), and Build (roadmap execution). Use when someone
   says "PLAID", "plaid idea", "help me find an idea", "product idea",
   "idea from my business", "idea from my expertise", "what should I build",
   "plan a product", "define my vision", "generate a PRD", "plan my app",
   "spec out my idea", "product strategy", "help me build something",
-  "plaid launch", "go-to-market", "launch plan", "GTM strategy",
-  "help me launch", "marketing plan", "launch playbook", "plaid build",
-  "build the app", "start building", "execute the roadmap", "build phase",
-  or "continue building".
+  "plaid design", "design from image", "translate image to design",
+  "create design.md", "image to design system", "extract design tokens",
+  "design system from screenshot", "plaid launch", "go-to-market",
+  "launch plan", "GTM strategy", "help me launch", "marketing plan",
+  "launch playbook", "plaid build", "build the app", "start building",
+  "execute the roadmap", "build phase", or "continue building".
 license: MIT
 metadata:
   author: plaid-dev
@@ -22,7 +25,7 @@ metadata:
 
 ## Overview
 
-PLAID helps founders go from idea to launched product through structured conversations and AI-powered document generation. The full pipeline is: **Idea → Plan → Launch → Build.**
+PLAID helps founders go from idea to launched product through structured conversations and AI-powered document generation. The full pipeline is: **Idea → Plan → Launch → Build.** Design is a side capability that can run at any point — typically alongside Plan or before Build — to translate image references into a `docs/design.md` token spec.
 
 ## Shared Context
 
@@ -40,6 +43,7 @@ Determine which capability the user needs based on their request, then read the 
 |---|---|
 | "plaid idea", "help me find an idea", "product idea", "idea from my business", "idea from my expertise", "what should I build" | `references/idea.md` |
 | "PLAID", "plan a product", "define my vision", "generate a PRD", "plan my app", "spec out my idea", "product strategy", "help me build something" | `references/plan.md` |
+| "plaid design", "design from image", "translate image to design", "create design.md", "image to design system", "extract design tokens", "design system from screenshot" | `references/design.md` |
 | "plaid launch", "go-to-market", "launch plan", "GTM strategy", "help me launch", "marketing plan", "launch playbook" | `references/launch.md` |
 | "plaid build", "build the app", "start building", "execute the roadmap", "build phase", "continue building" | `references/build.md` |
 
@@ -53,6 +57,9 @@ If the request is ambiguous, check the project state to determine the right capa
 - `vision.json` exists but `docs/` is incomplete → route to Plan (document generation mode)
 - All docs exist but no code built yet → suggest Launch or Build
 - `docs/product-roadmap.md` has unchecked tasks → route to Build
+- User shares an image, screenshot, or Figma URL with no other clear intent → offer Design
+
+Design is image-triggered and orthogonal to the main pipeline — it does not require any other PLAID document. Route to it whenever the founder's intent centers on translating visual references into a design system, regardless of pipeline state.
 
 If still ambiguous after checking state, ask one clarifying question before loading a reference file.
 
@@ -60,7 +67,8 @@ If still ambiguous after checking state, ask one clarifying question before load
 
 When a capability completes, suggest the natural next step. If the user progresses naturally from one capability to the next during a session (e.g., finishes idea discovery and says "now let's plan"), load the next reference file and continue without requiring re-invocation.
 
-- After Idea completes → suggest planning (`/plaid`) — `product-idea.md` pre-fills much of the vision intake
-- After Plan completes → suggest launching (`/plaid`) or building (`/plaid`)
-- After Launch completes → suggest building (`/plaid`)
-- After Build completes → suggest launching (`/plaid`) if not done already
+- After Idea completes → suggest planning (`/plaid plan`) — `product-idea.md` pre-fills much of the vision intake
+- After Plan completes → suggest Design (`/plaid design`) if the founder has imagery to anchor on, then launching (`/plaid launch`) or building (`/plaid build`)
+- After Design completes → if `docs/prd.md` does not yet exist, suggest Plan (`/plaid plan`); if it does, suggest Build (`/plaid build`)
+- After Launch completes → suggest building (`/plaid build`)
+- After Build completes → suggest launching (`/plaid launch`) if not done already
