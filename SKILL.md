@@ -7,9 +7,9 @@ description: |
   (translate image references into a design.md design-system spec), Launch
   (go-to-market strategy), and Build (roadmap execution). Use when someone
   says "PLAID", "plaid idea", "help me find an idea", "product idea",
-  "idea from my business", "idea from my expertise", "what should I build",
+  "idea from my business", "idea from my expertise",
   "plan a product", "define my vision", "generate a PRD", "plan my app",
-  "spec out my idea", "product strategy", "help me build something",
+  "spec out my idea", "product strategy",
   "plaid design", "design from image", "translate image to design",
   "create design.md", "image to design system", "extract design tokens",
   "design system from screenshot", "plaid launch", "go-to-market",
