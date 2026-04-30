@@ -67,8 +67,8 @@ If still ambiguous after checking state, ask one clarifying question before load
 
 When a capability completes, suggest the natural next step. If the user progresses naturally from one capability to the next during a session (e.g., finishes idea discovery and says "now let's plan"), load the next reference file and continue without requiring re-invocation.
 
-- After Idea completes → suggest planning (`/plaid`) — `product-idea.md` pre-fills much of the vision intake
-- After Plan completes → suggest Design (`/plaid design`) if the founder has imagery to anchor on, then launching (`/plaid`) or building (`/plaid`)
-- After Design completes → if `docs/prd.md` does not yet exist, suggest Plan; if it does, suggest Build
-- After Launch completes → suggest building (`/plaid`)
-- After Build completes → suggest launching (`/plaid`) if not done already
+- After Idea completes → suggest planning (`/plaid plan`) — `product-idea.md` pre-fills much of the vision intake
+- After Plan completes → suggest Design (`/plaid design`) if the founder has imagery to anchor on, then launching (`/plaid launch`) or building (`/plaid build`)
+- After Design completes → if `docs/prd.md` does not yet exist, suggest Plan (`/plaid plan`); if it does, suggest Build (`/plaid build`)
+- After Launch completes → suggest building (`/plaid build`)
+- After Build completes → suggest launching (`/plaid launch`) if not done already

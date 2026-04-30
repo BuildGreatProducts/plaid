@@ -18,7 +18,7 @@ PLAID is a single skill with five capabilities, each handling a distinct phase o
 |---|---|---|---|
 | **Idea** | "plaid idea", "help me find an idea", "what should I build" | Guided discovery of a product idea from business processes or personal expertise | `product-idea.md` |
 | **Plan** | "PLAID", "plan a product", "define my vision", "generate a PRD" | Vision intake conversation + document generation | `vision.json`, `product-vision.md`, `prd.md`, `product-roadmap.md` |
-| **Design** | "plaid design", "design from image", "create design.md", "image to design system" | Translates image references (screenshots, mockups, Figma URLs) into a [Google design.md](https://github.com/google-labs-code/design.md) token spec + prose rationale | `design.md` |
+| **Design** | "plaid design", "design from image", "create design.md", "image to design system" | Translates image references (screenshots, mockups, Figma URLs) into a [Google design.md](https://github.com/google-labs-code/design.md) token spec + prose rationale | `docs/design.md` |
 | **Launch** | "plaid launch", "go-to-market", "launch plan", "GTM strategy" | Go-to-market plan generation | `gtm.md` |
 | **Build** | "plaid build", "build the app", "start building" | Executes roadmap phase by phase, reviews code, commits to git | Working code, git commits per phase |
 
@@ -65,7 +65,7 @@ For each question, PLAID generates 3 tailored suggestions based on your previous
 
 ### 3. Design
 
-Translates an image — or a set of image references — into a structured `design.md` file following [Google's open design.md format](https://github.com/google-labs-code/design.md). Standalone — does not require any other PLAID document, but pairs naturally with `product-vision.md` and `prd.md`.
+Translates an image — or a set of image references — into a structured `docs/design.md` file following [Google's open design.md format](https://github.com/google-labs-code/design.md). Standalone — does not require any other PLAID document, but pairs naturally with `product-vision.md` and `prd.md`.
 
 1. **Image intake** — Share screenshots, mockups, Figma URLs (read via the Figma MCP), or live website references. Multiple images are supported; identify the primary anchor.
 2. **Image analysis** — PLAID describes what's actually in the imagery: colors with approximate hex values, typography character, spacing density, shape language, elevation philosophy, components visible, and overall mood.
@@ -76,7 +76,7 @@ Translates an image — or a set of image references — into a structured `desi
 
 | Document | Purpose | Audience |
 |---|---|---|
-| `design.md` | Design system spec — YAML tokens (colors, typography, spacing, rounded, components) with prose rationale for each section | Coding agents, designers |
+| `docs/design.md` | Design system spec — YAML tokens (colors, typography, spacing, rounded, components) with prose rationale for each section | Coding agents, designers |
 
 ### 4. Launch
 
