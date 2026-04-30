@@ -8,16 +8,17 @@
 ```
 # PLAID — Product Led AI Development
 
-An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single skill with four capabilities.
+An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single skill with five capabilities.
 
 ## Capabilities
 
-PLAID is a single skill with four capabilities, each handling a distinct phase of the product development pipeline:
+PLAID is a single skill with five capabilities, each handling a distinct phase of the product development pipeline:
 
 | Capability | Trigger | What It Does | Output |
 |---|---|---|---|
 | **Idea** | "plaid idea", "help me find an idea", "what should I build" | Guided discovery of a product idea from business processes or personal expertise | `product-idea.md` |
 | **Plan** | "PLAID", "plan a product", "define my vision", "generate a PRD" | Vision intake conversation + document generation | `vision.json`, `product-vision.md`, `prd.md`, `product-roadmap.md` |
+| **Design** | "plaid design", "design from image", "create design.md", "image to design system" | Translates image references (screenshots, mockups, Figma URLs) into a [Google design.md](https://github.com/google-labs-code/design.md) token spec + prose rationale | `design.md` |
 | **Launch** | "plaid launch", "go-to-market", "launch plan", "GTM strategy" | Go-to-market plan generation | `gtm.md` |
 | **Build** | "plaid build", "build the app", "start building" | Executes roadmap phase by phase, reviews code, commits to git | Working code, git commits per phase |
 
@@ -62,7 +63,22 @@ For each question, PLAID generates 3 tailored suggestions based on your previous
 | `prd.md` | Technical specification — architecture, data models, API specs, user stories, requirements, design system, auth/payments setup | Coding agents, developers |
 | `product-roadmap.md` | Phased build plan with checkbox-tracked tasks for sequential execution | Coding agents, project managers |
 
-### 3. Launch
+### 3. Design
+
+Translates an image — or a set of image references — into a structured `design.md` file following [Google's open design.md format](https://github.com/google-labs-code/design.md). Standalone — does not require any other PLAID document, but pairs naturally with `product-vision.md` and `prd.md`.
+
+1. **Image intake** — Share screenshots, mockups, Figma URLs (read via the Figma MCP), or live website references. Multiple images are supported; identify the primary anchor.
+2. **Image analysis** — PLAID describes what's actually in the imagery: colors with approximate hex values, typography character, spacing density, shape language, elevation philosophy, components visible, and overall mood.
+3. **Context questions** — A short interactive pass: emotional tone, audience and context of use, color role assignments, type scale, density, shape language, elevation, component priorities, and anti-patterns. Each question gets 3 tailored suggestions.
+4. **Token derivation** — Synthesizes a YAML block with `colors`, `typography`, `rounded`, `spacing`, and `components` per the design.md spec. Variants like hover and pressed are separate component entries.
+5. **Prose drafting** — Writes the eight canonical sections in order: Overview, Colors, Typography, Layout, Elevation & Depth, Shapes, Components, Do's and Don'ts. Prose explains the *why* behind the tokens.
+6. **Output** — `docs/design.md` — front matter for coding agents, prose for design rationale.
+
+| Document | Purpose | Audience |
+|---|---|---|
+| `design.md` | Design system spec — YAML tokens (colors, typography, spacing, rounded, components) with prose rationale for each section | Coding agents, designers |
+
+### 4. Launch
 
 Generates your go-to-market playbook. Requires `vision.json` and `docs/product-vision.md` from the Plan capability.
 
@@ -70,7 +86,7 @@ Generates your go-to-market playbook. Requires `vision.json` and `docs/product-v
 |---|---|---|
 | `gtm.md` | Go-to-market plan — launch strategy, pre-launch playbook, channel strategy, growth tactics, metrics | Founders, marketing |
 
-### 4. Build
+### 5. Build
 
 Executes the roadmap phase by phase. Requires `docs/product-roadmap.md` and `docs/prd.md` from the Plan capability.
 
@@ -116,6 +132,8 @@ Start a new conversation with your AI coding agent and trigger PLAID:
 
 **Plan:** "PLAID", "Help me build something", "Plan a product", "Define my vision", "Generate a PRD", "Spec out my idea"
 
+**Design:** "plaid design", "Design from image", "Create design.md", "Image to design system", "Extract design tokens"
+
 **Launch:** "plaid launch", "Go-to-market plan", "Launch strategy", "GTM"
 
 **Build:** "plaid build", "Start building", "Execute the roadmap"
@@ -154,6 +172,7 @@ plaid/
 ├── references/                 # Capability files + detailed guides
 │   ├── idea.md                 # Idea discovery — produces product-idea.md
 │   ├── plan.md                 # Vision intake + 3-doc generation
+│   ├── design.md               # Image-to-design.md translation
 │   ├── launch.md               # Go-to-market plan generation
 │   ├── build.md                # Roadmap execution + git commits
 │   ├── INTAKE-GUIDE.md         # Full question bank with suggestion prompts
