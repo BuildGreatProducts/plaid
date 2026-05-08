@@ -8,11 +8,11 @@
 ```
 # PLAID — Product Led AI Development
 
-An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, and go-to-market specialist into a single skill with six capabilities.
+An agent skill that guides founders from idea to launched product through structured conversations and AI-powered document generation. PLAID combines the thinking of a product strategist, brand strategist, UX researcher, design director, technical architect, conversion copywriter, and go-to-market specialist into a single skill with seven capabilities.
 
 ## Capabilities
 
-PLAID is a single skill with six capabilities, each handling a distinct phase of the product development pipeline:
+PLAID is a single skill with seven capabilities, each handling a distinct phase of the product development pipeline:
 
 | Capability | Trigger | What It Does | Output |
 |---|---|---|---|
@@ -20,6 +20,7 @@ PLAID is a single skill with six capabilities, each handling a distinct phase of
 | **Validate** | "plaid validate", "validate my idea", "pressure-test", "is this idea good" | Brutally pressure-tests the chosen idea — fatal flaws, problem reality, competition, first 10 customers, 2-week MVP test, strong/weak/pivot verdict. Asks targeted follow-up questions to confirm direction, then sharpens `docs/product-idea.md`. | `docs/validation-report.md`, sharpened `docs/product-idea.md` |
 | **Plan** | "PLAID", "plan a product", "define my vision", "generate a PRD" | Vision intake conversation + document generation | `vision.json`, `product-vision.md`, `prd.md`, `product-roadmap.md` |
 | **Design** | "plaid design", "design from image", "create design.md", "image to design system" | Translates image references (screenshots, mockups, Figma URLs) into a [Google design.md](https://github.com/google-labs-code/design.md) token spec + prose rationale | `docs/design.md` |
+| **Waitlist** | "plaid waitlist", "scaffold a waitlist page", "landing page", "build a waitlist" | Scaffolds a Next.js waitlist page from `docs/product-idea.md` + `docs/design.md` — 2-column hero with copy + form on the left and image on the right, wired to a chosen email-capture provider | `waitlist/` Next.js project |
 | **Launch** | "plaid launch", "go-to-market", "launch plan", "GTM strategy" | Go-to-market plan generation | `gtm.md` |
 | **Build** | "plaid build", "build the app", "start building" | Executes roadmap phase by phase, reviews code, commits to git | Working code, git commits per phase |
 
@@ -97,7 +98,22 @@ Translates an image — or a set of image references — into a structured `docs
 |---|---|---|
 | `docs/design.md` | Design system spec — YAML tokens (colors, typography, spacing, rounded, components) with prose rationale for each section | Coding agents, designers |
 
-### 5. Launch
+### 5. Waitlist
+
+Scaffolds a self-contained Next.js waitlist page in `waitlist/` from `docs/product-idea.md` and `docs/design.md`. Output is a single-section, conversion-best-practices waitlist page: 2-column hero with copy on the left and image on the right.
+
+1. **Prerequisites check** — Requires both `docs/product-idea.md` and `docs/design.md`. Reads `vision.json` / `docs/product-vision.md` opportunistically for richer copy signal (audience persona, magic moment, brand voice, founder credentials).
+2. **Read and analyze** — Extracts target user, problem, magic moment, why-you from the idea/vision; YAML tokens + tone signals from `design.md`. Summarizes back in 4–6 bullets so the founder can correct any misread before copy is drafted.
+3. **Draft copy with options** — Generates 3 options each for: eyebrow / waitlist incentive ("Join the waitlist — early access"), H1 (≤10 words, magic-moment-led), description (1–2 sentences with target user noun + mechanism), three benefit-led feature bullets (always exactly 3 sets of 3), and a proof / guarantee line (founder credential → quantitative claim → "No spam" default — never invents social proof).
+4. **Image and form-tool intake** — Asks for a hero image (local path, URL, or "placeholder") and a form provider: ConvertKit, Beehiiv, Mailchimp, Tally, Typeform, Formspree, Loops, or "I'll paste it later". Wires the chosen provider's standard embed snippet with a TODO marker for the form ID.
+5. **Confirm and scaffold** — Writes a self-contained Next.js 15 + TypeScript + Tailwind v4 project under `waitlist/`, with the design system's tokens emitted into `app/globals.css` via Tailwind's `@theme` directive. The page is one server component; `components/FormEmbed.tsx` switches over the provider.
+6. **Handoff** — Tells the founder how to preview (`cd waitlist && npm install && npm run dev`), lists every remaining placeholder with `file:line` references, and suggests `/plaid launch` next.
+
+| Document | Purpose | Audience |
+|---|---|---|
+| `waitlist/` | Self-contained Next.js waitlist page wired to a chosen email-capture provider, styled from `docs/design.md` tokens | Visitors, founders |
+
+### 6. Launch
 
 Generates your go-to-market playbook. Requires `vision.json` and `docs/product-vision.md` from the Plan capability.
 
@@ -105,7 +121,7 @@ Generates your go-to-market playbook. Requires `vision.json` and `docs/product-v
 |---|---|---|
 | `gtm.md` | Go-to-market plan — launch strategy, pre-launch playbook, channel strategy, growth tactics, metrics | Founders, marketing |
 
-### 6. Build
+### 7. Build
 
 Executes the roadmap phase by phase. Requires `docs/product-roadmap.md` and `docs/prd.md` from the Plan capability.
 
@@ -155,6 +171,8 @@ Start a new conversation with your AI coding agent and trigger PLAID:
 
 **Design:** "plaid design", "Design from image", "Create design.md", "Image to design system", "Extract design tokens"
 
+**Waitlist:** "plaid waitlist", "Scaffold a waitlist page", "Landing page", "Build a waitlist", "Make a landing page"
+
 **Launch:** "plaid launch", "Go-to-market plan", "Launch strategy", "GTM"
 
 **Build:** "plaid build", "Start building", "Execute the roadmap"
@@ -197,6 +215,7 @@ plaid/
 │   ├── validate.md             # Idea pressure-test — produces docs/validation-report.md
 │   ├── plan.md                 # Vision intake + 3-doc generation
 │   ├── design.md               # Image-to-design.md translation
+│   ├── waitlist.md             # Next.js waitlist page scaffolding
 │   ├── launch.md               # Go-to-market plan generation
 │   ├── build.md                # Roadmap execution + git commits
 │   ├── INTAKE-GUIDE.md         # Full question bank with suggestion prompts
@@ -205,6 +224,7 @@ plaid/
 │   ├── PRD-GENERATION.md       # How prd.md is generated
 │   ├── ROADMAP-GENERATION.md   # How product-roadmap.md is generated
 │   ├── GTM-GENERATION.md       # How gtm.md is generated
+│   ├── WAITLIST-GENERATION.md  # Next.js scaffold templates + copy/embed/token rules
 │   └── TECH-STACK-OPTIONS.md   # Comparison data for stack recommendations
 ├── scripts/
 │   └── validate-vision.js      # Schema validator and migrator
