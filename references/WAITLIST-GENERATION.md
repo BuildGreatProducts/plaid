@@ -169,7 +169,7 @@ export default {
 
 ### 2.5 `waitlist/.gitignore`
 
-```
+```text
 node_modules/
 .next/
 out/
@@ -351,7 +351,7 @@ Open http://localhost:3000.
 
 ## Form provider
 
-**{{provider}}** — swap the form ID at `app/page.tsx` (or `components/FormEmbed.tsx`).
+**{{provider}}** — swap the form ID at `components/FormEmbed.tsx` (the `FORM_ID` constant near the top of the file).
 {{provider_id_instructions}}
 
 ## Hero image
@@ -374,9 +374,9 @@ Re-run `/plaid waitlist` (regenerate mode) to refresh after editing `design.md`.
 
 `{{placeholder_map}}` is a bulleted list of every remaining `{{...}}` and `// TODO` with `file:line` references. Example:
 
-```
+```text
 - `app/page.tsx` line 14 — eyebrow text
-- `components/FormEmbed.tsx` line 8 — `formId` prop (your Tally form ID)
+- `components/FormEmbed.tsx` line 8 — `FORM_ID` constant (your Tally form ID)
 - `public/hero.png` — replace with your own image
 ```
 
