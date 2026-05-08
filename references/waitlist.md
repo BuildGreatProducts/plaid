@@ -1,19 +1,19 @@
 ---
-name: landing
+name: waitlist
 description: |
-  Scaffold a Next.js waitlist landing page from `docs/product-idea.md` and
-  `docs/design.md`. Generates a self-contained `landing/` project with a
+  Scaffold a Next.js waitlist page from `docs/product-idea.md` and
+  `docs/design.md`. Generates a self-contained `waitlist/` project with a
   conversion-best-practices 2-column hero (copy + form on the left, hero
   image on the right), wired to a chosen email-capture provider
   (ConvertKit, Beehiiv, Mailchimp, Tally, Typeform, Formspree, Loops, or
   "paste later").
 ---
 
-# Landing — Waitlist Page Scaffolding
+# Waitlist — Next.js Page Scaffolding
 
-This capability takes the product story (`docs/product-idea.md`) and the design system (`docs/design.md`) and scaffolds a self-contained Next.js waitlist landing page in `landing/` at the project root. Output is a single-section, conversion-best-practices waitlist page: 2-column hero with copy on the left and image on the right.
+This capability takes the product story (`docs/product-idea.md`) and the design system (`docs/design.md`) and scaffolds a self-contained Next.js waitlist page in `waitlist/` at the project root. Output is a single-section, conversion-best-practices waitlist page: 2-column hero with copy on the left and image on the right.
 
-The full template content lives in `references/LANDING-GENERATION.md` — read it before drafting copy or scaffolding files.
+The full template content lives in `references/WAITLIST-GENERATION.md` — read it before drafting copy or scaffolding files.
 
 ## When to Use This
 
@@ -23,17 +23,17 @@ The full template content lives in `references/LANDING-GENERATION.md` — read i
 
 ## Modes
 
-**Fresh** (no `landing/` directory exists): Run the full flow Step 0 → 6.
+**Fresh** (no `waitlist/` directory exists): Run the full flow Step 0 → 6.
 
-**Partial** (`landing/` exists with some files but is clearly incomplete — e.g. no `package.json`): Resume at the highest-numbered step whose outputs are missing. Re-confirm the founder's last choices before any destructive write.
+**Partial** (`waitlist/` exists with some files but is clearly incomplete — e.g. no `package.json`): Resume at the highest-numbered step whose outputs are missing. Re-confirm the founder's last choices before any destructive write.
 
-**`landing/` already exists and looks complete**: Read `landing/README.md` to recover prior choices (form provider, image source, picked copy). Ask the founder which scope they want to regenerate:
+**`waitlist/` already exists and looks complete**: Read `waitlist/README.md` to recover prior choices (form provider, image source, picked copy). Ask the founder which scope they want to regenerate:
 
 1. Rewrite copy only (regenerate `app/page.tsx`)
 2. Swap form provider (regenerate `components/FormEmbed.tsx` and `app/page.tsx`)
 3. Swap hero image (regenerate the hero block in `app/page.tsx`, copy new file into `public/`)
 4. Refresh design tokens (regenerate `app/globals.css` from the current `docs/design.md`)
-5. Full overwrite (rewrite every file in `landing/`)
+5. Full overwrite (rewrite every file in `waitlist/`)
 
 Confirm before any destructive overwrite. Only rewrite the files in scope.
 
@@ -55,7 +55,7 @@ Before doing anything else, check inputs:
 
 1. **`docs/product-idea.md`** — required. If missing:
 
-   > "I need a product idea before I can write landing copy. Run `/plaid idea` to discover one (or `/plaid` if you already know what you want to build)."
+   > "I need a product idea before I can write waitlist copy. Run `/plaid idea` to discover one (or `/plaid` if you already know what you want to build)."
 
    Stop. Do not proceed.
 
@@ -103,7 +103,7 @@ From **`docs/product-vision.md`** (if present) scan §2 (User Research), §3 (Br
 
 ## Step 2: Draft Copy with Options
 
-Generate **three options** for each of the five copy fields below. Follow the rules in `references/LANDING-GENERATION.md` §1. Show all five sets together in a single message. The founder picks numbers (`1a 2b 3c 4a 5c`) or rewrites anything in their own words.
+Generate **three options** for each of the five copy fields below. Follow the rules in `references/WAITLIST-GENERATION.md` §1. Show all five sets together in a single message. The founder picks numbers (`1a 2b 3c 4a 5c`) or rewrites anything in their own words.
 
 1. **Eyebrow / waitlist incentive** — pattern: `Join the waitlist — <incentive>`. Three flavors: discount, early access, status/scarcity. Default to early access if no incentive is hinted at in the inputs. Never invent a discount.
 
@@ -129,7 +129,7 @@ Ask one question at a time. Don't batch.
 
 Handle the response:
 
-- **Local path** (e.g. `~/Pictures/hero.png`, `./assets/cover.jpg`) — read it with the `Read` tool to verify it exists and is a real image. Plan to copy it to `landing/public/hero.<ext>` during Step 5.
+- **Local path** (e.g. `~/Pictures/hero.png`, `./assets/cover.jpg`) — read it with the `Read` tool to verify it exists and is a real image. Plan to copy it to `waitlist/public/hero.<ext>` during Step 5.
 - **URL** (e.g. `https://images.unsplash.com/...`) — reference directly in the `<Image>` tag's `src`. Plan to populate `next.config.mjs` `images.remotePatterns` with `{ protocol: "https", hostname: "<host>" }`.
 - **"placeholder" / "later" / "I don't have one"** — render a styled CSS placeholder block (gradient + product initials) using design tokens. Confirm: "OK — I'll render a tokenized gradient block with your product initials. You can drop a real image in `public/` later."
 
@@ -151,7 +151,7 @@ If the founder picks 1–7, follow up:
 
 If the founder picks 8 (paste-later), no follow-up needed — render the dashed-border placeholder div.
 
-Record provider + form ID. Both will be substituted into `components/FormEmbed.tsx` and surfaced in `landing/README.md`.
+Record provider + form ID. Both will be substituted into `components/FormEmbed.tsx` and surfaced in `waitlist/README.md`.
 
 -----
 
@@ -169,7 +169,7 @@ Before writing any files, show the founder a tight outline:
 - **Proof line:** `<picked text>`
 - **Hero image:** `<local path | URL | placeholder>`
 - **Form provider:** `<provider>` (`<ID or TODO marker>`)
-- **Files I'll write into `landing/`:** `package.json`, `tsconfig.json`, `next.config.mjs`, `postcss.config.mjs`, `.gitignore`, `app/layout.tsx`, `app/globals.css`, `app/page.tsx`, `components/FormEmbed.tsx`, `public/hero.<ext>` (if local image), `README.md`
+- **Files I'll write into `waitlist/`:** `package.json`, `tsconfig.json`, `next.config.mjs`, `postcss.config.mjs`, `.gitignore`, `app/layout.tsx`, `app/globals.css`, `app/page.tsx`, `components/FormEmbed.tsx`, `public/hero.<ext>` (if local image), `README.md`
 
 Ask: "Anything to change before I scaffold?"
 
@@ -177,19 +177,19 @@ Ask: "Anything to change before I scaffold?"
 
 ## Step 5: Scaffold
 
-Create `landing/` if it doesn't exist. Write files in this order, verifying each write before moving on. Use the templates in `references/LANDING-GENERATION.md` §2 verbatim — substitute every `{{placeholder}}`, do not improvise file contents.
+Create `waitlist/` if it doesn't exist. Write files in this order, verifying each write before moving on. Use the templates in `references/WAITLIST-GENERATION.md` §2 verbatim — substitute every `{{placeholder}}`, do not improvise file contents.
 
-1. `landing/package.json`
-2. `landing/tsconfig.json`
-3. `landing/next.config.mjs`
-4. `landing/postcss.config.mjs`
-5. `landing/.gitignore`
-6. `landing/app/layout.tsx`
-7. `landing/app/globals.css` — generate the `@theme` block from `docs/design.md` per `LANDING-GENERATION.md` §4
-8. `landing/components/FormEmbed.tsx` — populate the chosen provider branch with the real form ID (or TODO marker) per `LANDING-GENERATION.md` §3
-9. `landing/app/page.tsx` — populate eyebrow, H1, description, 3 bullets, proof line, and the correct hero block (Image / external Image / placeholder div)
-10. `landing/public/hero.<ext>` — only if the founder gave a local path; copy bytes from the source path
-11. `landing/README.md` — populate the placeholder map (every remaining `{{...}}` and `// TODO` with `file:line` references), provider-specific instructions, hero instructions
+1. `waitlist/package.json`
+2. `waitlist/tsconfig.json`
+3. `waitlist/next.config.mjs`
+4. `waitlist/postcss.config.mjs`
+5. `waitlist/.gitignore`
+6. `waitlist/app/layout.tsx`
+7. `waitlist/app/globals.css` — generate the `@theme` block from `docs/design.md` per `WAITLIST-GENERATION.md` §4
+8. `waitlist/components/FormEmbed.tsx` — populate the chosen provider branch with the real form ID (or TODO marker) per `WAITLIST-GENERATION.md` §3
+9. `waitlist/app/page.tsx` — populate eyebrow, H1, description, 3 bullets, proof line, and the correct hero block (Image / external Image / placeholder div)
+10. `waitlist/public/hero.<ext>` — only if the founder gave a local path; copy bytes from the source path
+11. `waitlist/README.md` — populate the placeholder map (every remaining `{{...}}` and `// TODO` with `file:line` references), provider-specific instructions, hero instructions
 
 After each write, verify it succeeded. If a write fails, surface a clear, user-friendly message based on the cause:
 
@@ -206,10 +206,10 @@ Only confirm "saved" after every write is verified successful.
 
 After every file is written, say:
 
-> "Your waitlist page is scaffolded at `landing/`. To preview it:
+> "Your waitlist page is scaffolded at `waitlist/`. To preview it:
 >
 > ```sh
-> cd landing && npm install && npm run dev
+> cd waitlist && npm install && npm run dev
 > ```
 >
 > Open http://localhost:3000.
@@ -219,20 +219,20 @@ After every file is written, say:
 > - `<hero_placeholder>` if you used the CSS placeholder
 > - Anything else flagged with `// TODO` in the code
 >
-> Next: run `/plaid launch` to plan the rest of your go-to-market — the landing page is the front door of your launch playbook."
+> Next: run `/plaid launch` to plan the rest of your go-to-market — the waitlist page is the front door of your launch playbook."
 
 Do not run `npm install` yourself. The founder runs install in their terminal.
 
 -----
 
-## Editing the landing page after scaffolding
+## Editing the waitlist page after scaffolding
 
-If the founder wants to refine after `landing/` exists:
+If the founder wants to refine after `waitlist/` exists:
 
-- **Rewrite copy only** — Read existing `landing/README.md` to recover the picked copy. Re-run Step 2 (draft copy with options), then rewrite only `landing/app/page.tsx` and the matching lines in `landing/README.md`.
-- **Swap form provider** — Re-run Step 3 Q2. Rewrite `landing/components/FormEmbed.tsx` (active branch) and the form provider section of `landing/README.md`.
-- **Swap hero image** — Re-run Step 3 Q1. If new file path: copy bytes into `landing/public/`. Update the hero block in `app/page.tsx` and `next.config.mjs` if the protocol changed.
+- **Rewrite copy only** — Read existing `waitlist/README.md` to recover the picked copy. Re-run Step 2 (draft copy with options), then rewrite only `waitlist/app/page.tsx` and the matching lines in `waitlist/README.md`.
+- **Swap form provider** — Re-run Step 3 Q2. Rewrite `waitlist/components/FormEmbed.tsx` (active branch) and the form provider section of `waitlist/README.md`.
+- **Swap hero image** — Re-run Step 3 Q1. If new file path: copy bytes into `waitlist/public/`. Update the hero block in `app/page.tsx` and `next.config.mjs` if the protocol changed.
 - **Refresh design tokens** — Re-read `docs/design.md`, regenerate the `@theme` block in `app/globals.css`. Leave page copy untouched.
 - **Full overwrite** — Run the entire flow Step 1 → 5, confirming overwrite at Step 4.
 
-Always preserve the design-token-driven CSS variables — the landing page is meant to track the founder's design system as it evolves.
+Always preserve the design-token-driven CSS variables — the waitlist page is meant to track the founder's design system as it evolves.
